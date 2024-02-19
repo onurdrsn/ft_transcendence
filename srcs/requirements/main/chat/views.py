@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.conf import settings
@@ -87,14 +89,14 @@ def get_recent_chatroom_messages(user):
     return sorted(m_and_f, key=lambda x: x['message'].timestamp, reverse=True)
 
 
-# Ajax call to return a private chatroom or create one if it does not exist
+# Fetch call to return a private chatroom or create one if it does not exist
 def create_or_return_private_chat(request):
     user1 = request.user
     payload = {}
 
     if user1.is_authenticated:
         if request.method == "POST":
-            user2_id = request.POST.get("user2_id")
+            user2_id = json.loads(request.body)['user2_id']
             try:
                 user2 = User.objects.get(pk=user2_id)
                 chat = find_or_create_private_chat(user1, user2)

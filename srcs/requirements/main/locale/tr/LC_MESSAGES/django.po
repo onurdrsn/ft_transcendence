@@ -281,7 +281,7 @@ msgstr "Gönder"
 
 #: chat/templates/html/room.html:73
 msgid "No message your friends"
-msgstr "Arkadaşlarınıza mesaj göndermeyin"
+msgstr "Arkadaşlarınızdan mesaj bulunamadı."
 
 #: chat/templates/html/room.html:90
 msgid "Socket Client Error"

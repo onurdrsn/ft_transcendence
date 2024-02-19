@@ -76,4 +76,3 @@ class AccountUpdateForm(forms.ModelForm):
         if commit:
             account.save()
         return account
-
