@@ -1,0 +1,755 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-16 19:17+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: account/forms.py:21 account/forms.py:58
+#, python-brace-format
+msgid "Email \"{email}\" is already in use."
+msgstr "E-posta \"{email}\" zaten kullanımda."
+
+#: account/forms.py:29 account/forms.py:66
+#, python-brace-format
+msgid "Username \"{username}\" is already in use."
+msgstr "Kullanıcı adı \"{username}\" zaten kullanımda."
+
+#: account/forms.py:43
+msgid "Invalid login"
+msgstr "Geçersiz giriş"
+
+#: account/models.py:12
+msgid "Users must have an email address."
+msgstr "Kullanıcıların bir e-posta adresi olmalıdır."
+
+#: account/models.py:14
+msgid "Users must have an username."
+msgstr "Kullanıcıların bir kullanıcı adı olmalıdır."
+
+#: account/templates/html/account.html:3 templates/part/navbar.html:120
+msgid "Account"
+msgstr "Hesap"
+
+#: account/templates/html/account.html:18
+#: account/templates/html/edit_account.html:26
+msgid "Email"
+msgstr "E-Posta"
+
+#: account/templates/html/account.html:25
+msgid "This user hidden his email"
+msgstr "Bu kullanıcı e-postasını gizledi"
+
+#: account/templates/html/account.html:28
+#: account/templates/html/edit_account.html:28
+#: account/templates/html/edit_account.html:29
+#: account/templates/html/register.html:18
+msgid "Username"
+msgstr "Kullanıcı adı"
+
+#: account/templates/html/account.html:32 templates/password/change.html:27
+msgid "Update"
+msgstr "Güncelle"
+
+#: account/templates/html/account.html:34
+msgid "Change password"
+msgstr "Şifre değiştirme"
+
+#: account/templates/html/account.html:45
+msgid "Accept Friend Request"
+msgstr "Arkadaşlık İsteğini Kabul Et"
+
+#: account/templates/html/account.html:64
+msgid "Cancel Friend Request"
+msgstr "Arkadaşlık İsteğini İptal Et"
+
+#: account/templates/html/account.html:68
+msgid "Send Friend Request"
+msgstr "Arkadaşlık İsteği Gönder"
+
+#: account/templates/html/account.html:74
+msgid "Block this user"
+msgstr "Bu kullanıcıyı engelle"
+
+#: account/templates/html/account.html:78
+msgid "Unfriend"
+msgstr "Arkadaşlıktan Çıkar"
+
+#: account/templates/html/account.html:85 account/templates/html/search.html:31
+#: chat/templates/html/room.html:54 friend/templates/friend_list.html:35
+msgid "Friends"
+msgstr "Arkadaşlar"
+
+#: account/templates/html/account.html:99
+msgid "Friend Requests"
+msgstr "Arkadaş İstekleri"
+
+#: account/templates/html/account.html:111
+msgid "Message"
+msgstr "Mesaj"
+
+#: account/templates/html/account.html:121
+msgid "Unblock this user"
+msgstr "Bu kullanıcının engelini kaldır"
+
+#: account/templates/html/edit_account.html:4
+msgid "Edit Account"
+msgstr "Hesabı Düzenle"
+
+#: account/templates/html/edit_account.html:13
+msgid "Back"
+msgstr "Geri"
+
+#: account/templates/html/edit_account.html:21
+msgid "Edit"
+msgstr "Düzenle"
+
+#: account/templates/html/edit_account.html:27
+#: account/templates/html/login.html:21 account/templates/html/register.html:17
+#: templates/password/reset_form.html:9
+msgid "Email address"
+msgstr "E-posta adresi"
+
+#: account/templates/html/edit_account.html:36
+msgid "Hide Email"
+msgstr "E-posta gizli"
+
+#: account/templates/html/edit_account.html:55
+msgid "Save"
+msgstr "Kaydet"
+
+#: account/templates/html/home.html:3 account/templates/html/home.html:6
+#: templates/part/navbar.html:9 tictac/templates/navbar.html:9
+msgid "Home"
+msgstr "Ana Sayfa"
+
+#: account/templates/html/login.html:4 account/templates/html/login.html:38
+#: templates/part/navbar.html:132
+msgid "Login"
+msgstr "Giriş"
+
+#: account/templates/html/login.html:23 account/templates/html/register.html:20
+msgid "Password"
+msgstr "Şifre"
+
+#: account/templates/html/login.html:41 templates/password/reset_form.html:7
+msgid "Reset password"
+msgstr "Şifreyi sıfırla"
+
+#: account/templates/html/register.html:4
+#: account/templates/html/register.html:38
+msgid "Register"
+msgstr "Kayıt Ol"
+
+#: account/templates/html/register.html:24 templates/password/change.html:18
+msgid "Confirm password"
+msgstr "Şifreyi Onayla"
+
+#: account/templates/html/search.html:5 templates/part/navbar.html:111
+msgid "Search"
+msgstr "Arama"
+
+#: account/templates/html/search.html:24 friend/templates/friend_list.html:28
+msgid "Send a Message"
+msgstr "Bir Mesaj Gönder"
+
+#: account/templates/html/search.html:42 friend/templates/friend_list.html:46
+msgid "Not Friends"
+msgstr "Arkadaş Değil"
+
+#: account/templates/html/search.html:49
+msgid "This is u"
+msgstr "Bu sensin"
+
+#: account/templates/html/search.html:62
+#: friend/templates/friend_request.html:42
+msgid "No results"
+msgstr "Sonuç yok"
+
+#: account/views.py:16
+msgid "Please login first."
+msgstr "Lütfen önce giriş yapın."
+
+#: account/views.py:55
+msgid "You've already signed up. Please login again."
+msgstr "Zaten kayıt oldunuz. Lütfen tekrar giriş yapın."
+
+#: account/views.py:90
+msgid "User does not exist"
+msgstr "Kullanıcı mevcut değil"
+
+#: account/views.py:106
+#, python-brace-format
+msgid "U are blocked by this {} user."
+msgstr "Bu {} kullanıcısı tarafından engellendiniz."
+
+#: account/views.py:168
+msgid "Invalid query"
+msgstr "Geçersiz sorgu"
+
+#: account/views.py:178
+msgid "something went wrong"
+msgstr "bir şeyler ters gitti"
+
+#: account/views.py:180
+msgid "U cannot edit this account"
+msgstr "Bu hesabı düzenleyemezsiniz"
+
+#: chat/consumers.py:52
+msgid "You can't send an empty message."
+msgstr "Boş bir mesaj gönderemezsiniz."
+
+#: chat/consumers.py:62
+msgid "Something went wrong retrieving the chatroom messages."
+msgstr "Sohbet odası mesajlarını alırken bir şeyler ters gitti."
+
+#: chat/consumers.py:72
+msgid "Something went wrong retrieving the other users account details."
+msgstr "Diğer kullanıcıların hesap bilgilerini alırken bir şeyler ters gitti."
+
+#: chat/consumers.py:87 chat/consumers.py:378
+msgid "EXCEPTION: "
+msgstr "İSTİSNA: "
+
+#: chat/consumers.py:178 chat/consumers.py:181 chat/consumers.py:325
+#: chat/consumers.py:331
+msgid "ROOM_ACCESS_DENIED"
+msgstr "ODA_ERİŞİM_REDDEDİLDİ"
+
+#: chat/consumers.py:178 chat/consumers.py:181
+msgid "Room access denied"
+msgstr "Oda erişimi reddedildi"
+
+#: chat/consumers.py:321
+msgid "ROOM_INVALID"
+msgstr "ODA_GEÇERSİZ"
+
+#: chat/consumers.py:321
+msgid "Invalid room."
+msgstr "Geçersiz oda."
+
+#: chat/consumers.py:325
+msgid "You do not have permission to join this room."
+msgstr "Bu odaya girmek için izniniz yok."
+
+#: chat/consumers.py:331
+msgid "You must be friends to chat."
+msgstr "Sohbet etmek için arkadaş olmalısınız."
+
+#: chat/consumers.py:353
+msgid "DATA_ERROR"
+msgstr "VERİ_HATASI"
+
+#: chat/consumers.py:353
+msgid "Unable to get that users information."
+msgstr "Kullanıcı bilgilerine ulaşılamıyor."
+
+#: chat/exceptions.py:15
+#, python-brace-format
+msgid "ClientError(code = {self.code}, message =  {self.message})"
+msgstr "İstemci Hatası (kod = {self.code}, mesaj = {self.message})"
+
+#: chat/templates/html/room.html:4 templates/part/navbar.html:20
+#: tictac/templates/navbar.html:20
+msgid "Chat"
+msgstr "Sohbet"
+
+#: chat/templates/html/room.html:26
+msgid "Loading"
+msgstr "Yükleniyor"
+
+#: chat/templates/html/room.html:39 chat/templates/html/room.html:40
+msgid "Type your message"
+msgstr "Mesajınızı yazın"
+
+#: chat/templates/html/room.html:42
+msgid "Send"
+msgstr "Gönder"
+
+#: chat/templates/html/room.html:73
+msgid "No message your friends"
+msgstr "Arkadaşlarınıza mesaj göndermeyin"
+
+#: chat/templates/html/room.html:90
+msgid "Socket Client Error"
+msgstr "Soket İstemcisi Hatası"
+
+#: chat/templates/html/room.html:95
+#: chat/templates/js/create_or_return_private_chat.html:23
+#: friend/templates/snippets/accept.html:18
+#: friend/templates/snippets/block.html:24
+#: friend/templates/snippets/cancel.html:24
+#: friend/templates/snippets/decline.html:20
+#: friend/templates/snippets/remove.html:23
+#: friend/templates/snippets/send.html:23
+#: friend/templates/snippets/unblock.html:23 friend/views.py:55
+#: friend/views.py:75 friend/views.py:152
+msgid "Something went wrong."
+msgstr "Bir şeyler ters gitti."
+
+#: chat/templates/html/room.html:99
+msgid "Close"
+msgstr "Kapat"
+
+#: chat/templates/js/create_or_return_private_chat.html:14
+#: chat/templates/js/room.html:447 chat/views.py:101
+msgid "Successfully."
+msgstr "Başarılı."
+
+#: chat/templates/js/create_or_return_private_chat.html:22
+msgid "ERROR"
+msgstr "HATA"
+
+#: chat/templates/js/room.html:13
+msgid "Error ID"
+msgstr "Hata Kimliği"
+
+#: chat/templates/js/room.html:96
+msgid "Got WebSocket message."
+msgstr "Ağ Soketi iletisi alındı."
+
+#: chat/templates/js/room.html:146
+msgid "WebSocket closed."
+msgstr "Ağ Soketi kapatıldı."
+
+#: chat/templates/js/room.html:149
+msgid "WebSocket onopen."
+msgstr "Ağ Soketi açık."
+
+#: chat/templates/js/room.html:152
+msgid "WebSocket onerror."
+msgstr "Web Soketi hata verdi."
+
+#: chat/templates/js/room.html:156
+msgid "WebSocket opened."
+msgstr "WebSocket açıldı."
+
+#: chat/templates/js/room.html:158
+msgid "WebSocket connecting..."
+msgstr "WebSocket bağlanıyor..."
+
+#: chat/views.py:56
+#, python-brace-format
+msgid "Friend object not found for user: {user}"
+msgstr "Kullanıcı için arkadaş nesnesi bulunamadı: {user}"
+
+#: chat/views.py:104
+msgid "Unable to start a chat with that user."
+msgstr "Bu kullanıcıyla sohbet başlatılamıyor."
+
+#: chat/views.py:106
+msgid "Invalid request method."
+msgstr "Geçersiz istek yöntemi."
+
+#: chat/views.py:108
+msgid "You can't start a chat if you are not authenticated."
+msgstr "Kimliğiniz doğrulanmamışsa sohbet başlatamazsınız."
+
+#: friend/templates/friend_list.html:4 friend/templates/friend_list_2.html:4
+msgid "Friend List"
+msgstr "Arkadaş Listesi"
+
+#: friend/templates/friend_list.html:58
+msgid "This is you"
+msgstr "BU sensin"
+
+#: friend/templates/friend_list.html:69
+msgid "No friends"
+msgstr "Arkadaşın yok"
+
+#: friend/templates/friend_list_2.html:10
+msgid "Not found user id"
+msgstr "Kullanıcı kimliği bulunamadı"
+
+#: friend/templates/friend_request.html:4
+msgid "Friend Request"
+msgstr "Arkadaş İsteği"
+
+#: friend/templates/snippets/accept.html:10 friend/views.py:73
+msgid "Friend request accepted."
+msgstr "Arkadaşlık isteği kabul edildi."
+
+#: friend/templates/snippets/accept.html:17
+#: friend/templates/snippets/block.html:23
+#: friend/templates/snippets/cancel.html:23
+#: friend/templates/snippets/decline.html:19
+#: friend/templates/snippets/remove.html:22
+#: friend/templates/snippets/unblock.html:22
+msgid "Error"
+msgstr "Hata"
+
+#: friend/templates/snippets/cancel.html:15
+msgid "Friend request cancelled."
+msgstr "Arkadaşlık isteği iptal edildi."
+
+#: friend/templates/snippets/decline.html:11 friend/views.py:150
+msgid "Friend request declined."
+msgstr "Arkadaşlık isteği reddedildi."
+
+#: friend/templates/snippets/remove.html:14 friend/views.py:93
+msgid "Successfully removed friend."
+msgstr "Arkadaş başarıyla kaldırıldı."
+
+#: friend/templates/snippets/send.html:16 friend/views.py:52
+msgid "Friend request sent."
+msgstr "Arkadaşlık isteği gönderildi."
+
+#: friend/views.py:23
+msgid "U can't view another users friend requests."
+msgstr "Başka bir kullanıcının arkadaşlık isteklerini görüntüleyemezsiniz."
+
+#: friend/views.py:43
+msgid "U already sent them a friend request."
+msgstr "Onlara zaten bir arkadaşlık isteği gönderdin."
+
+#: friend/views.py:57 friend/views.py:79
+msgid "Unable to send a friend request."
+msgstr "Arkadaşlık isteği gönderilemiyor."
+
+#: friend/views.py:59 friend/views.py:81
+msgid "U must be authenticated to send a friend request."
+msgstr "Arkadaşlık isteği göndermek için kimliğiniz doğrulanmalıdır."
+
+#: friend/views.py:77
+msgid "That is not your friend request."
+msgstr "Bu senin arkadaşlık isteğin değil."
+
+#: friend/views.py:95 friend/views.py:113 friend/views.py:131
+msgid "Something went wrong {}"
+msgstr "Bir şeyler ters gitti {}"
+
+#: friend/views.py:97
+msgid "There was an error. Unable to remove that friend."
+msgstr "Bir hata oluştu. Bu arkadaş kaldırılamıyor"
+
+#: friend/views.py:99
+msgid "U must be authenticated to remove a friend."
+msgstr "Bir arkadaşı kaldırmak için kimliğiniz doğrulanmalıdır."
+
+#: friend/views.py:111
+msgid "Successfully blocked user."
+msgstr "Kullanıcı başarıyla engellendi."
+
+#: friend/views.py:115
+msgid "There was an error. Unable to block that user."
+msgstr "Bir hata oluştu. Bu kullanıcı engellenemiyor."
+
+#: friend/views.py:117
+msgid "You must be authenticated to block a user."
+msgstr ""
+"Bir kullanıcıyı engellemek için kimliğinizin doğrulanmış olması gerekir."
+
+#: friend/views.py:129
+msgid "Successfully unblocked user."
+msgstr "Kullanıcı engeli başarıyla kaldırıldı."
+
+#: friend/views.py:133
+msgid "There was an error. Unable to unblock that user."
+msgstr "Bir hata oluştu. Bu kullanıcının engeli kaldırılamıyor."
+
+#: friend/views.py:135
+msgid "You must be authenticated to unblock a user."
+msgstr ""
+"Bir kullanıcının engelini kaldırmak için kimliğinizin doğrulanmış olması "
+"gerekir."
+
+#: friend/views.py:154
+msgid "That is not your friend request to decline."
+msgstr "Bu senin reddedeceğin bir arkadaşlık isteği değil."
+
+#: friend/views.py:156
+msgid "Unable to decline friend request."
+msgstr "Arkadaşlık isteği reddedilemiyor."
+
+#: friend/views.py:158
+msgid "U must be authenticated."
+msgstr "Kimliğinizin doğrulanması gerekir."
+
+#: friend/views.py:173
+msgid "Nothing to cancel. Friend request does not exist."
+msgstr "İptal edilecek bir şey yok. Arkadaşlık isteği mevcut değil."
+
+#: friend/views.py:178 friend/views.py:182
+msgid "Friend request canceled."
+msgstr "Arkadaşlık isteği iptal edildi."
+
+#: friend/views.py:184
+msgid "Unable to cancel that friend request."
+msgstr "Arkadaşlık isteği iptal edilemiyor."
+
+#: friend/views.py:187
+msgid "You must be authenticated to cancel a friend request."
+msgstr "You must be authenticated to cancel a friend request."
+
+#: friend/views.py:201
+msgid "That user does not exist."
+msgstr "Bu kullanıcı mevcut değil."
+
+#: friend/views.py:205
+#, python-brace-format
+msgid "Could not find a friends list for {}"
+msgstr "{} için bir arkadaş listesi bulunamadı"
+
+#: friend/views.py:210 friend/views.py:220
+msgid "You must be friends to view their friends list."
+msgstr "Arkadaş listesini görüntülemek için arkadaş olmanız gerekir."
+
+#: main/settings.py:180
+msgid "German"
+msgstr "Almanca"
+
+#: main/settings.py:181
+msgid "English"
+msgstr "İngilizce"
+
+#: main/settings.py:182
+msgid "French"
+msgstr "Fransızca"
+
+#: main/settings.py:183
+msgid "Italian"
+msgstr "İtalyanca"
+
+#: main/settings.py:184
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: templates/404.html:4
+#, fuzzy
+#| msgid "Room code not found"
+msgid "Page not found"
+msgstr "Oda kodu bulunamadı"
+
+#: templates/404.html:5
+#, fuzzy
+#| msgid "Nothing to cancel. Friend request does not exist."
+msgid "Sorry, the page you are looking for does not exist."
+msgstr "İptal edilecek bir şey yok. Arkadaşlık isteği mevcut değil."
+
+#: templates/part/navbar.html:26
+msgid "Games"
+msgstr "Oyunlar"
+
+#: templates/part/navbar.html:97
+msgid "Language"
+msgstr "Dil"
+
+#: templates/part/navbar.html:121
+msgid "Logout"
+msgstr "Çıkış"
+
+#: templates/part/navbar.html:136
+msgid "Sign Up"
+msgstr "Kayıt Ol"
+
+#: templates/password/change.html:3 templates/password/change.html:8
+msgid "Password Change"
+msgstr "Şifre Değiştirme"
+
+#: templates/password/change.html:10
+msgid "Old password"
+msgstr "Eski şifre"
+
+#: templates/password/change.html:14
+msgid "New password"
+msgstr "Yeni şifre"
+
+#: templates/password/change_done.html:3
+msgid "Password Change Done"
+msgstr "Şifre Değiştirme Tamamlandı"
+
+#: templates/password/change_done.html:8
+msgid "Your password has been Updated."
+msgstr "Şifreniz güncellendi."
+
+#: templates/password/reset_complete.html:3
+msgid "Password Reset Complete"
+msgstr "Şifre Sıfırlama Başarılı"
+
+#: templates/password/reset_complete.html:9
+#, fuzzy
+#| msgid "Your password has been Updated."
+msgid "Your password has been reset."
+msgstr "Şifreniz güncellendi."
+
+#: templates/password/reset_complete.html:10
+msgid "You may go ahead and"
+msgstr ""
+
+#: templates/password/reset_complete.html:10
+msgid "log in"
+msgstr "oturum açabilirsiniz"
+
+#: templates/password/reset_done.html:3
+msgid "Password Reset Done"
+msgstr "Şifre Sıfırlama Tamamlandı"
+
+#: templates/password/reset_done.html:9
+msgid ""
+"We've emailed you instructions for setting your password, if an account "
+"exists with the email you entered."
+msgstr ""
+"Eğer girdiğiniz e-posta ile ilişkili bir hesap varsa, şifrenizi belirlemeniz "
+"için size e-posta ile talimatlar gönderdik."
+
+#: templates/password/reset_done.html:10
+msgid "You should receive them shortly."
+msgstr "Kısa süre içinde elinize ulaşacaktır."
+
+#: templates/password/reset_done.html:13
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+"Eğer bir e-posta almadıysanız, lütfen kayıt olduğunuz adresi doğru "
+"girdiğinizden emin olun ve spam klasörünüzü kontrol edin."
+
+#: templates/password/reset_done.html:15
+msgid "Return to home page"
+msgstr "Ana sayfaya dön"
+
+#: templates/password/reset_email.html:2
+#, fuzzy, python-format
+#| msgid ""
+#| "You're receiving this email because you requested a password reset for "
+#| "your user account at %(site_name)s sitesinde."
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+"Şifre sıfırlama isteğinde bulunduğunuz için bu e-postayı alıyorsunuz "
+"kullanıcı hesabınız %(site_name)s."
+
+#: templates/password/reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr "Lütfen aşağıdaki sayfaya gidin ve yeni bir şifre seçin:"
+
+#: templates/password/reset_email.html:8
+msgid "Your username, in case you’ve forgotten:"
+msgstr "Kullanıcı adınız, unuttuysanız:"
+
+#: templates/password/reset_email.html:9
+msgid "This link will expire in 1 days."
+msgstr "Bu bağlantı 1 gün içinde geçersiz olacak"
+
+#: templates/password/reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr "Sitemizi kullandığınız için teşekkür ederiz!"
+
+#: templates/password/reset_email.html:11
+msgid "The Transformers Team"
+msgstr "Transformers Ekibi"
+
+#: templates/password/reset_form.html:3
+msgid "Password Reset"
+msgstr "Parola Sıfırlama"
+
+#: templates/password/reset_form.html:11
+msgid "Send reset email"
+msgstr "Sıfırlama e-postası gönder"
+
+#: tictac/consumers.py:37
+msgid "The connection closed unexpectedly."
+msgstr "Bağlantı beklenmedik şekilde kapandı."
+
+#: tictac/consumers.py:39
+msgid "Connection closed successfully."
+msgstr "Bağlantı başarıyla kapatıldı."
+
+#: tictac/consumers.py:41
+#, python-brace-format
+msgid "Connection closed. Code: {close_code}"
+msgstr "Bağlantı kapandı. Kod: {close_code}"
+
+#: tictac/templates/front.html:7 tictac/templates/play.html:8
+msgid "PLAY"
+msgstr "OYNA"
+
+#: tictac/templates/front.html:8 tictac/templates/play.html:9
+msgid "Hello"
+msgstr "Merhaba"
+
+#: tictac/templates/front.html:21
+msgid "Choose Option"
+msgstr "Seçeneği seçin"
+
+#: tictac/templates/front.html:24
+msgid "Have Room Code"
+msgstr "Oda Kodunuz Olsun"
+
+#: tictac/templates/front.html:25
+msgid "Create Room Code"
+msgstr "Oda Kodu Oluştur"
+
+#: tictac/templates/front.html:28
+msgid "Enter Room Code"
+msgstr "Oda Kodunu Girin"
+
+#: tictac/templates/front.html:29
+msgid "Type room code"
+msgstr "Oda kodu yazın"
+
+#: tictac/templates/front.html:31
+msgid "Start Game"
+msgstr "Oyuna Başla"
+
+#: tictac/templates/game_history.html:3 tictac/templates/game_history.html:7
+msgid "Game History"
+msgstr "Oyun Geçmişi"
+
+#: tictac/templates/game_history.html:11
+msgid "Player 1"
+msgstr "1. Oyuncu"
+
+#: tictac/templates/game_history.html:12
+msgid "Player 2"
+msgstr "2. Oyuncu"
+
+#: tictac/templates/game_history.html:13
+msgid "Winner"
+msgstr "Kazanan"
+
+#: tictac/templates/game_history.html:14
+msgid "Room code"
+msgstr "Oda kodu"
+
+#: tictac/templates/game_history.html:15
+msgid "Date Played"
+msgstr "Oynanma Tarihi"
+
+#: tictac/templates/navbar.html:56
+msgid "History"
+msgstr "Geçmiş"
+
+#: tictac/templates/navbar.html:67
+msgid "Log Out"
+msgstr "Çıkış Yap"
+
+#: tictac/templates/play.html:45
+msgid "Wait for the other user, if it has arrived you can refresh."
+msgstr "Diğer kullanıcıyı bekleyin, eğer geldiyse yenileyebilirsiniz."
+
+#: tictac/views.py:21
+msgid "Room code not found"
+msgstr "Oda kodu bulunamadı"
+
+#: tictac/views.py:25 tictac/views.py:40
+msgid "The room is already full"
+msgstr "Oda zaten dolu"
+
+#: tictac/views.py:70 tictac/views.py:76
+msgid "Invalid request method"
+msgstr "Geçersiz istek yöntemi"

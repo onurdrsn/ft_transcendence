@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Chat' %}{% endblock %}
+
+{% block content %}
+   {% include 'css/room.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 m-0 p-2">
+                <div class="card" id="id_chatroom_card">
+                    <div id="id_room_title" class="card-header">
+                        <a href="{% url 'account:account_view' user_id=request.user.id %}"
+                           class="btn" target="_blank" id="id_user_info_container">
+                            <div class="d-flex align-items-center">
+                                <img loading="eager" src="{% url 'account:account_view' user_id=request.user.id %}" class="rounded-circle" id="id_other_user_profile_image" alt="profile_logo">
+                                <h3 id="id_other_username"></h3>
+                            </div>
+                        </a>
+                    </div>
+
+
+
+                    <div class="card-body p-1">
+                        <div class="d-flex flex-column" id="id_chat_log_container">
+                            <div class="d-flex flex-row justify-content-center" id="id_chat_room_loading_spinner_container">
+                                <div class="spinner-border text-primary" id="id_chatroom_loading_spinner" role="status" style="display: none;">
+                                    <span class="visually-hidden">{% trans 'Loading' %}...</span>
+                                </div>
+                            </div>
+
+                            <div class="my-auto p-2 chat-log" id="id_chat_log">
+                                <!-- Mesajlar burada gösterilecek -->
+                            </div>
+
+                            <span class="d-none page-number" id="id_page_number">
+                                1
+                            </span>
+
+                            <div class="d-flex flex-row">
+                                <label for="id_chat_message_input" class="visually-hidden">{% trans 'Type your message' %}</label>
+                                <textarea class="form-control flex-grow-1 chat-message-input" id="id_chat_message_input" placeholder="{% trans 'Type your message' %}..."></textarea>
+                                <button id="id_chat_message_submit" class="btn btn-primary chat-message-submit-button">
+                                    {% trans 'Send' %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Friends -->
+            <div class="col-sm-3 m-0 p-2">
+                <div class="card">
+                    <div class="d-flex flex-row align-items-center card-header">
+                        <h3>{% trans 'Friends' %}</h3>
+                    </div>
+
+                    <div class="card-body p-1">
+                        <div class="d-flex flex-column friends-list-container">
+                            {% for x in m_and_f %}
+                                <div class="d-flex flex-row p-2 friend-container flex-grow-1" onclick="onSelectFriend({{ x.friend_user.id|safe }})" id="id_friend_container_{{ x.friend_user.id|safe }}">
+                                    <img class="profile-image rounded-circle" id="id_friend_img_{{ x.friend_user.id|safe }}" src="{% static 'images/default.svg' %}" alt="logo" loading="eager">
+                                    <div class="d-flex flex-column">
+                                        <span class="username-span">
+                                            {{ x.friend_user.username|safe }}
+                                        </span>
+                                        <span class="friend-message-span">
+                                            {{ x.message|truncatechars:20|safe}}
+                                        </span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% if not m_and_f %}
+                            <div class="alert alert-danger">{% trans 'No message your friends' %}</div>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Friends -->
+        </div>
+
+        <!-- Client Error MODAL -->
+        <!-- Button trigger modal -->
+        <button type="button" id="id_trigger_client_error_modal" class="d-none btn btn-primary" data-bs-toggle="modal" data-bs-target="#id_client_error_modal"></button>
+        <!-- Modal -->
+        <div class="modal fade" id="id_client_error_modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Socket Client Error' %}</h5>
+                            <button type="button" class="btn btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p id="id_client_error_modal_body">{% trans 'Something went wrong.' %}</p>
+                    </div>
+
+				    <div class="modal-footer">
+				    	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="id_client_error_modal_close_btn">{% trans 'Close' %}</button>
+				    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Client Error MODAL -->
+    </div>
+
+    <!-- script file including -->
+    {% include 'js/room.html' %}
+{% endblock %}

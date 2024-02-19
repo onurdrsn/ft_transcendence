@@ -1,0 +1,32 @@
+{% load i18n %}
+<script>
+	function removeFriend(id){
+        let controller = new AbortController()
+        let signal = controller.signal
+
+        setTimeout(() => controller.abort(), 5000)
+        fetch("{% url 'friend:remove_friend_request' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            credentials: "include",
+            signal: signal,
+            body: JSON.stringify({
+				receiver_user_id: id,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data['response'] === "{% trans 'Successfully removed friend.' %}"){
+					// UI gets updated
+				}
+				else if(data['response'] != null){
+					alert(data['response'])
+				}
+            })
+            .catch(error => console.error("{% trans 'Error' %}", error))
+            .finally(() => location.reload())
+	}
+</script>

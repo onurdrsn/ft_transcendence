@@ -1,0 +1,69 @@
+<!-- This is basically exactly the same as friend_list.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Search' %}{% endblock %}
+{% block content %}
+{% include 'css/style.html' %}
+    
+<div class="container">
+	<div class="p-2">
+		{% if accounts %}
+			<div class="w-100 d-flex flex-row flex-wrap">
+                {% for account in accounts %}
+                    <div class="card flex-row flex-grow-1 p-4 mx-2 my-2 align-items-center">
+                        <a class="btn" href="{% url 'account:account_view' user_id=account.0.pk %}">
+                            <div class="card-image m-2">
+                                <img class="img-fluid profile-image" src="{{ account.0.profile_image.url }}" alt="user_logo">
+                            </div>
+                        </a>
+                        <a class="btn" href="{% url 'account:account_view' user_id=account.0.pk %}">
+                            <div class="card-center px-2">
+                                <h4 class="card-title">{{ account.0.username }}</h4>
+                                {% if account.1 %}
+                                    <p class="card-text"><a href="#" onclick="CreateOrReturnPrivateChat('{{ account.0.id }}')">{% trans 'Send a Message' %}</a></p>
+                                {% endif %}
+                            </div>
+                        </a>
+                        <div class="d-flex flex-row card-right flex-grow-1 justify-content-end mx-2">
+                            {% if account.1 %}
+                                <div class="d-flex flex-row friends-text-container p-3">
+                                    <p class="m-auto">{% trans 'Friends' %}</p>
+                                    <span class="m-auto pl-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                                            <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            {% else %}
+                                {% if account.0 != request.user %}
+                                    <div class="d-flex flex-row friends-text-container p-3" style="color:red;">
+                                        <span class="pl-2 m-auto">{% trans 'Not Friends' %}</span>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if account.0 == request.user %}
+                                <div class="d-flex flex-row friends-text-container p-3">
+                                    <p class="m-auto">{% trans 'This is u' %}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:2 %}
+                        </div>
+                        <div class="d-flex flex-row flex-wrap">
+                    {% endif %}
+                {% endfor %}
+        {% else %}
+            <!-- If no friends -->
+            <div class="d-flex flex-row flex-grow-1 justify-content-center align-items-center p-4">
+                <p>{% trans 'No results' %}</p>
+            </div>
+        {% endif %}
+        </div>
+	</div>
+</div>
+{% include 'js/create_or_return_private_chat.html' %}
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% load i18n %}
+<script>
+	function unblockFriend(id) {
+        console.log(id)
+        let controller = new AbortController()
+        let signal = controller.signal
+
+        setTimeout(() => controller.abort(), 5000)
+        fetch("{% url 'friend:unblock_user' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            signal: signal,
+            body: JSON.stringify({
+                receiver_user_id: id,
+            }),
+            credentials: "include",
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data['response'] === "{% trans 'Successfully unblocked user.' %}") {
+				// UI gets updated
+                }
+                else if(data['response'] != null){
+                    alert(data['response'])
+                }
+            })
+            .catch(error => console.error("{% trans 'Error' %}", error))
+            .finally(() => location.reload())
+}
+</script>

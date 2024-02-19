@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Friend Request' %}{% endblock %}
+
+{% block content %}
+<div class="container">
+		{% if friend_requests %}
+			<div class="d-flex flex-row flex-wrap">
+				{% for request in friend_requests %}
+					<div class="card flex-row flex-grow-0 mt-4 mx-2 align-items-center">
+						<a class="btn" href="{% url 'account:account_view' user_id=request.sender.id %}">
+							<div class="card-image m-3">
+								<img class="img-fluid profile-image" src="{{ request.sender.profile_image.url }}" alt="">
+							</div>
+						</a>
+						<a class="btn card-text" href="{% url 'account:account_view' user_id=request.sender.id %}">
+							<div class="card-center px-2">
+								<h4 class="card-title">{{ request.sender.username }}</h4>
+							</div>
+						</a>
+						<div class="d-flex flex-row card-right flex-grow-1 justify-content-end mx-2">
+							<span id="id_cancel_{{ request.sender.id }}" class="pointer p-1" onclick='declineFriendRequest("{{ request.id }}")'>
+								<svg style="color:red;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+									<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+									<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5		 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"></path>
+								</svg>
+							</span>
+							<span id="id_confirm_{{ request.sender.id }}" class="pointer p-1" onclick='acceptFriendRequest("{{ request.id }}")'>
+								<svg style="color: lawngreen;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16">
+									<path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"></path>
+								</svg>
+							</span>
+						</div>
+					</div>
+					{% if forloop.counter|divisibleby:2 %}
+						</div><div class="d-flex flex-row flex-wrap">
+					{% endif %}
+				{% endfor %}
+		{% else %} <!-- If no friends -->
+			<div class="d-flex flex-row flex-grow-1 justify-content-center align-items-center p-4">
+				<p>{% trans 'No results' %}</p>
+			</div>
+		{% endif %}
+	</div>
+</div>
+
+{% include 'snippets/accept.html' %}
+{% include 'snippets/decline.html' %}
+
+{% endblock content %}

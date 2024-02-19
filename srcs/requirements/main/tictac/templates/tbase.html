@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-bs-theme="auto">
+<head>
+	{% include 'part/head.html' %}
+	<title> {% block title %}{% endblock %} </title>
+<body>
+    {% include 'part/color-mode.html' %}
+	{% include 'navbar.html' %}
+
+ 	{% block content %}
+ 	{% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

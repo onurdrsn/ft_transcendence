@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="{% if request.session.lang %}{{ request.session.lang }}{% else %}en{% endif %}" data-bs-theme="auto">
+	<head>
+		{% include 'part/head.html' %}
+        <title>{% block title %}{% endblock %}</title>
+	</head>
+	<body>
+		{% include 'part/color-mode.html' %}
+		{% include 'part/navbar.html' %}
+        <div style="overflow: hidden" class="container">
+            {% block content %}{% endblock %}
+        </div>
+        <script src="{% static 'js/main.js' %}"></script>
+	</body>
+</html>

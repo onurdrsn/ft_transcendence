@@ -1,0 +1,27 @@
+{% load i18n %}
+<script>
+	function declineFriendRequest(id){
+        let controller = new AbortController()
+        let signal = controller.signal
+
+        setTimeout(() => controller.abort(), 5000)
+        fetch("{% url 'friend:decline_friend' friend_request_id=99999999999999 %}".replace("99999999999999", id), {
+            method: 'GET',
+            signal: signal,
+            headers: {
+                'Accept': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data['response'] === "{% trans 'Friend request declined.' %}"){
+					// ui is updated
+				}
+				else if(data['response'] != null){
+					alert(data['response'])
+				}
+            })
+            .catch(error => console.error("{% trans 'Error' %}", error))
+            .finally(() => location.reload())
+	}
+</script>

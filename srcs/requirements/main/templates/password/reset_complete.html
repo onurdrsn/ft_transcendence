@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Password Reset Complete' %}{% endblock %}
+
+{% block content %}
+<div class="mt-4 p-5 rounded-lg bg-secondary bg-opacity-60">
+  <div class="container">
+    <div class="d-flex flex-column">
+      <h3 class="m-auto my-3">{% trans 'Your password has been reset.' %}</h3>
+      <p class="m-auto text-white">{% trans 'You may go ahead and' %} <a href="{% url 'account:login' %}">{% trans 'log in' %}</a></p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

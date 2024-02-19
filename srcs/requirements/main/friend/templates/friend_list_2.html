@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Friend List' %}{% endblock %}
+
+{% block content %}
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="alert alert-danger" role="alert">
+            {% trans 'Not found user id' %}
+        </div>
+    </div>
+</div>
+{% include 'js/create_or_return_private_chat.html' %}
+{% endblock content %}

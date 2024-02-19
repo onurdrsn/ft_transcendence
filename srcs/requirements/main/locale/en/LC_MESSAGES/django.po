@@ -1,0 +1,737 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-16 19:17+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: account/forms.py:21 account/forms.py:58
+#, python-brace-format
+msgid "Email \"{email}\" is already in use."
+msgstr ""
+
+#: account/forms.py:29 account/forms.py:66
+#, python-brace-format
+msgid "Username \"{username}\" is already in use."
+msgstr ""
+
+#: account/forms.py:43
+msgid "Invalid login"
+msgstr ""
+
+#: account/models.py:12
+msgid "Users must have an email address."
+msgstr ""
+
+#: account/models.py:14
+msgid "Users must have an username."
+msgstr ""
+
+#: account/templates/html/account.html:3 templates/part/navbar.html:120
+msgid "Account"
+msgstr ""
+
+#: account/templates/html/account.html:18
+#: account/templates/html/edit_account.html:26
+msgid "Email"
+msgstr ""
+
+#: account/templates/html/account.html:25
+msgid "This user hidden his email"
+msgstr ""
+
+#: account/templates/html/account.html:28
+#: account/templates/html/edit_account.html:28
+#: account/templates/html/edit_account.html:29
+#: account/templates/html/register.html:18
+msgid "Username"
+msgstr ""
+
+#: account/templates/html/account.html:32 templates/password/change.html:27
+msgid "Update"
+msgstr ""
+
+#: account/templates/html/account.html:34
+msgid "Change password"
+msgstr ""
+
+#: account/templates/html/account.html:45
+msgid "Accept Friend Request"
+msgstr ""
+
+#: account/templates/html/account.html:64
+msgid "Cancel Friend Request"
+msgstr ""
+
+#: account/templates/html/account.html:68
+msgid "Send Friend Request"
+msgstr ""
+
+#: account/templates/html/account.html:74
+msgid "Block this user"
+msgstr ""
+
+#: account/templates/html/account.html:78
+msgid "Unfriend"
+msgstr ""
+
+#: account/templates/html/account.html:85 account/templates/html/search.html:31
+#: chat/templates/html/room.html:54 friend/templates/friend_list.html:35
+msgid "Friends"
+msgstr ""
+
+#: account/templates/html/account.html:99
+msgid "Friend Requests"
+msgstr ""
+
+#: account/templates/html/account.html:111
+msgid "Message"
+msgstr ""
+
+#: account/templates/html/account.html:121
+msgid "Unblock this user"
+msgstr ""
+
+#: account/templates/html/edit_account.html:4
+msgid "Edit Account"
+msgstr ""
+
+#: account/templates/html/edit_account.html:13
+msgid "Back"
+msgstr ""
+
+#: account/templates/html/edit_account.html:21
+msgid "Edit"
+msgstr ""
+
+#: account/templates/html/edit_account.html:27
+#: account/templates/html/login.html:21 account/templates/html/register.html:17
+#: templates/password/reset_form.html:9
+msgid "Email address"
+msgstr ""
+
+#: account/templates/html/edit_account.html:36
+msgid "Hide Email"
+msgstr ""
+
+#: account/templates/html/edit_account.html:55
+msgid "Save"
+msgstr ""
+
+#: account/templates/html/home.html:3 account/templates/html/home.html:6
+#: templates/part/navbar.html:9 tictac/templates/navbar.html:9
+msgid "Home"
+msgstr ""
+
+#: account/templates/html/login.html:4 account/templates/html/login.html:38
+#: templates/part/navbar.html:132
+msgid "Login"
+msgstr ""
+
+#: account/templates/html/login.html:23 account/templates/html/register.html:20
+msgid "Password"
+msgstr ""
+
+#: account/templates/html/login.html:41 templates/password/reset_form.html:7
+msgid "Reset password"
+msgstr ""
+
+#: account/templates/html/register.html:4
+#: account/templates/html/register.html:38
+msgid "Register"
+msgstr ""
+
+#: account/templates/html/register.html:24 templates/password/change.html:18
+msgid "Confirm password"
+msgstr ""
+
+#: account/templates/html/search.html:5 templates/part/navbar.html:111
+msgid "Search"
+msgstr ""
+
+#: account/templates/html/search.html:24 friend/templates/friend_list.html:28
+msgid "Send a Message"
+msgstr ""
+
+#: account/templates/html/search.html:42 friend/templates/friend_list.html:46
+msgid "Not Friends"
+msgstr ""
+
+#: account/templates/html/search.html:49
+msgid "This is u"
+msgstr ""
+
+#: account/templates/html/search.html:62
+#: friend/templates/friend_request.html:42
+msgid "No results"
+msgstr ""
+
+#: account/views.py:16
+msgid "Please login first."
+msgstr ""
+
+#: account/views.py:55
+msgid "You've already signed up. Please login again."
+msgstr ""
+
+#: account/views.py:90
+msgid "User does not exist"
+msgstr ""
+
+#: account/views.py:106
+#, python-brace-format
+msgid "U are blocked by this {} user."
+msgstr ""
+
+#: account/views.py:168
+msgid "Invalid query"
+msgstr ""
+
+#: account/views.py:178
+msgid "something went wrong"
+msgstr ""
+
+#: account/views.py:180
+msgid "U cannot edit this account"
+msgstr ""
+
+#: chat/consumers.py:52
+msgid "You can't send an empty message."
+msgstr ""
+
+#: chat/consumers.py:62
+msgid "Something went wrong retrieving the chatroom messages."
+msgstr ""
+
+#: chat/consumers.py:72
+msgid "Something went wrong retrieving the other users account details."
+msgstr ""
+
+#: chat/consumers.py:87 chat/consumers.py:378
+msgid "EXCEPTION: "
+msgstr ""
+
+#: chat/consumers.py:178 chat/consumers.py:181 chat/consumers.py:325
+#: chat/consumers.py:331
+msgid "ROOM_ACCESS_DENIED"
+msgstr ""
+
+#: chat/consumers.py:178 chat/consumers.py:181
+msgid "Room access denied"
+msgstr ""
+
+#: chat/consumers.py:321
+msgid "ROOM_INVALID"
+msgstr ""
+
+#: chat/consumers.py:321
+msgid "Invalid room."
+msgstr ""
+
+#: chat/consumers.py:325
+msgid "You do not have permission to join this room."
+msgstr ""
+
+#: chat/consumers.py:331
+msgid "You must be friends to chat."
+msgstr ""
+
+#: chat/consumers.py:353
+msgid "DATA_ERROR"
+msgstr ""
+
+#: chat/consumers.py:353
+msgid "Unable to get that users information."
+msgstr ""
+
+#: chat/exceptions.py:15
+#, python-brace-format
+msgid "ClientError(code = {self.code}, message =  {self.message})"
+msgstr ""
+
+#: chat/templates/html/room.html:4 templates/part/navbar.html:20
+#: tictac/templates/navbar.html:20
+msgid "Chat"
+msgstr ""
+
+#: chat/templates/html/room.html:26
+msgid "Loading"
+msgstr ""
+
+#: chat/templates/html/room.html:39 chat/templates/html/room.html:40
+msgid "Type your message"
+msgstr ""
+
+#: chat/templates/html/room.html:42
+msgid "Send"
+msgstr ""
+
+#: chat/templates/html/room.html:73
+msgid "No message your friends"
+msgstr ""
+
+#: chat/templates/html/room.html:90
+msgid "Socket Client Error"
+msgstr ""
+
+#: chat/templates/html/room.html:95
+#: chat/templates/js/create_or_return_private_chat.html:23
+#: friend/templates/snippets/accept.html:18
+#: friend/templates/snippets/block.html:24
+#: friend/templates/snippets/cancel.html:24
+#: friend/templates/snippets/decline.html:20
+#: friend/templates/snippets/remove.html:23
+#: friend/templates/snippets/send.html:23
+#: friend/templates/snippets/unblock.html:23 friend/views.py:55
+#: friend/views.py:75 friend/views.py:152
+msgid "Something went wrong."
+msgstr ""
+
+#: chat/templates/html/room.html:99
+msgid "Close"
+msgstr ""
+
+#: chat/templates/js/create_or_return_private_chat.html:14
+#: chat/templates/js/room.html:447 chat/views.py:101
+msgid "Successfully."
+msgstr ""
+
+#: chat/templates/js/create_or_return_private_chat.html:22
+msgid "ERROR"
+msgstr ""
+
+#: chat/templates/js/room.html:13
+msgid "Error ID"
+msgstr ""
+
+#: chat/templates/js/room.html:96
+msgid "Got WebSocket message."
+msgstr ""
+
+#: chat/templates/js/room.html:146
+msgid "WebSocket closed."
+msgstr ""
+
+#: chat/templates/js/room.html:149
+msgid "WebSocket onopen."
+msgstr ""
+
+#: chat/templates/js/room.html:152
+msgid "WebSocket onerror."
+msgstr ""
+
+#: chat/templates/js/room.html:156
+msgid "WebSocket opened."
+msgstr ""
+
+#: chat/templates/js/room.html:158
+msgid "WebSocket connecting..."
+msgstr ""
+
+#: chat/views.py:56
+#, python-brace-format
+msgid "Friend object not found for user: {user}"
+msgstr ""
+
+#: chat/views.py:104
+msgid "Unable to start a chat with that user."
+msgstr ""
+
+#: chat/views.py:106
+msgid "Invalid request method."
+msgstr ""
+
+#: chat/views.py:108
+msgid "You can't start a chat if you are not authenticated."
+msgstr ""
+
+#: friend/templates/friend_list.html:4 friend/templates/friend_list_2.html:4
+msgid "Friend List"
+msgstr ""
+
+#: friend/templates/friend_list.html:58
+msgid "This is you"
+msgstr ""
+
+#: friend/templates/friend_list.html:69
+msgid "No friends"
+msgstr ""
+
+#: friend/templates/friend_list_2.html:10
+msgid "Not found user id"
+msgstr ""
+
+#: friend/templates/friend_request.html:4
+msgid "Friend Request"
+msgstr ""
+
+#: friend/templates/snippets/accept.html:10 friend/views.py:73
+msgid "Friend request accepted."
+msgstr ""
+
+#: friend/templates/snippets/accept.html:17
+#: friend/templates/snippets/block.html:23
+#: friend/templates/snippets/cancel.html:23
+#: friend/templates/snippets/decline.html:19
+#: friend/templates/snippets/remove.html:22
+#: friend/templates/snippets/unblock.html:22
+msgid "Error"
+msgstr ""
+
+#: friend/templates/snippets/cancel.html:15
+msgid "Friend request cancelled."
+msgstr ""
+
+#: friend/templates/snippets/decline.html:11 friend/views.py:150
+msgid "Friend request declined."
+msgstr ""
+
+#: friend/templates/snippets/remove.html:14 friend/views.py:93
+msgid "Successfully removed friend."
+msgstr ""
+
+#: friend/templates/snippets/send.html:16 friend/views.py:52
+msgid "Friend request sent."
+msgstr ""
+
+#: friend/views.py:23
+msgid "U can't view another users friend requests."
+msgstr ""
+
+#: friend/views.py:43
+msgid "U already sent them a friend request."
+msgstr ""
+
+#: friend/views.py:57 friend/views.py:79
+msgid "Unable to send a friend request."
+msgstr ""
+
+#: friend/views.py:59 friend/views.py:81
+msgid "U must be authenticated to send a friend request."
+msgstr ""
+
+#: friend/views.py:77
+msgid "That is not your friend request."
+msgstr ""
+
+#: friend/views.py:95 friend/views.py:113 friend/views.py:131
+msgid "Something went wrong {}"
+msgstr ""
+
+#: friend/views.py:97
+msgid "There was an error. Unable to remove that friend."
+msgstr ""
+
+#: friend/views.py:99
+msgid "U must be authenticated to remove a friend."
+msgstr ""
+
+#: friend/views.py:111
+msgid "Successfully blocked user."
+msgstr ""
+
+#: friend/views.py:115
+msgid "There was an error. Unable to block that user."
+msgstr ""
+
+#: friend/views.py:117
+msgid "You must be authenticated to block a user."
+msgstr ""
+
+#: friend/views.py:129
+msgid "Successfully unblocked user."
+msgstr ""
+
+#: friend/views.py:133
+msgid "There was an error. Unable to unblock that user."
+msgstr ""
+
+#: friend/views.py:135
+msgid "You must be authenticated to unblock a user."
+msgstr ""
+
+#: friend/views.py:154
+msgid "That is not your friend request to decline."
+msgstr ""
+
+#: friend/views.py:156
+msgid "Unable to decline friend request."
+msgstr ""
+
+#: friend/views.py:158
+msgid "U must be authenticated."
+msgstr ""
+
+#: friend/views.py:173
+msgid "Nothing to cancel. Friend request does not exist."
+msgstr ""
+
+#: friend/views.py:178 friend/views.py:182
+msgid "Friend request canceled."
+msgstr ""
+
+#: friend/views.py:184
+msgid "Unable to cancel that friend request."
+msgstr ""
+
+#: friend/views.py:187
+msgid "You must be authenticated to cancel a friend request."
+msgstr ""
+
+#: friend/views.py:201
+msgid "That user does not exist."
+msgstr ""
+
+#: friend/views.py:205
+#, python-brace-format
+msgid "Could not find a friends list for {}"
+msgstr ""
+
+#: friend/views.py:210 friend/views.py:220
+msgid "You must be friends to view their friends list."
+msgstr ""
+
+#: main/settings.py:180
+msgid "German"
+msgstr ""
+
+#: main/settings.py:181
+msgid "English"
+msgstr ""
+
+#: main/settings.py:182
+msgid "French"
+msgstr ""
+
+#: main/settings.py:183
+msgid "Italian"
+msgstr ""
+
+#: main/settings.py:184
+msgid "Turkish"
+msgstr ""
+
+#: templates/404.html:4
+msgid "Page not found"
+msgstr ""
+
+#: templates/404.html:5
+msgid "Sorry, the page you are looking for does not exist."
+msgstr ""
+
+#: templates/part/navbar.html:26
+msgid "Games"
+msgstr ""
+
+#: templates/part/navbar.html:97
+msgid "Language"
+msgstr ""
+
+#: templates/part/navbar.html:121
+msgid "Logout"
+msgstr ""
+
+#: templates/part/navbar.html:136
+msgid "Sign Up"
+msgstr ""
+
+#: templates/password/change.html:3 templates/password/change.html:8
+msgid "Password Change"
+msgstr ""
+
+#: templates/password/change.html:10
+msgid "Old password"
+msgstr ""
+
+#: templates/password/change.html:14
+msgid "New password"
+msgstr ""
+
+#: templates/password/change_done.html:3
+msgid "Password Change Done"
+msgstr ""
+
+#: templates/password/change_done.html:8
+msgid "Your password has been Updated."
+msgstr ""
+
+#: templates/password/reset_complete.html:3
+msgid "Password Reset Complete"
+msgstr ""
+
+#: templates/password/reset_complete.html:9
+msgid "Your password has been reset."
+msgstr ""
+
+#: templates/password/reset_complete.html:10
+msgid "You may go ahead and"
+msgstr ""
+
+#: templates/password/reset_complete.html:10
+msgid "log in"
+msgstr ""
+
+#: templates/password/reset_done.html:3
+msgid "Password Reset Done"
+msgstr ""
+
+#: templates/password/reset_done.html:9
+msgid ""
+"We've emailed you instructions for setting your password, if an account "
+"exists with the email you entered."
+msgstr ""
+
+#: templates/password/reset_done.html:10
+msgid "You should receive them shortly."
+msgstr ""
+
+#: templates/password/reset_done.html:13
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+
+#: templates/password/reset_done.html:15
+msgid "Return to home page"
+msgstr ""
+
+#: templates/password/reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: templates/password/reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: templates/password/reset_email.html:8
+msgid "Your username, in case you’ve forgotten:"
+msgstr ""
+
+#: templates/password/reset_email.html:9
+msgid "This link will expire in 1 days."
+msgstr ""
+
+#: templates/password/reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: templates/password/reset_email.html:11
+msgid "The Transformers Team"
+msgstr ""
+
+#: templates/password/reset_form.html:3
+msgid "Password Reset"
+msgstr ""
+
+#: templates/password/reset_form.html:11
+msgid "Send reset email"
+msgstr ""
+
+#: tictac/consumers.py:37
+msgid "The connection closed unexpectedly."
+msgstr ""
+
+#: tictac/consumers.py:39
+msgid "Connection closed successfully."
+msgstr ""
+
+#: tictac/consumers.py:41
+#, python-brace-format
+msgid "Connection closed. Code: {close_code}"
+msgstr ""
+
+#: tictac/templates/front.html:7 tictac/templates/play.html:8
+msgid "PLAY"
+msgstr ""
+
+#: tictac/templates/front.html:8 tictac/templates/play.html:9
+msgid "Hello"
+msgstr ""
+
+#: tictac/templates/front.html:21
+msgid "Choose Option"
+msgstr ""
+
+#: tictac/templates/front.html:24
+msgid "Have Room Code"
+msgstr ""
+
+#: tictac/templates/front.html:25
+msgid "Create Room Code"
+msgstr ""
+
+#: tictac/templates/front.html:28
+msgid "Enter Room Code"
+msgstr ""
+
+#: tictac/templates/front.html:29
+msgid "Type room code"
+msgstr ""
+
+#: tictac/templates/front.html:31
+msgid "Start Game"
+msgstr ""
+
+#: tictac/templates/game_history.html:3 tictac/templates/game_history.html:7
+msgid "Game History"
+msgstr ""
+
+#: tictac/templates/game_history.html:11
+msgid "Player 1"
+msgstr ""
+
+#: tictac/templates/game_history.html:12
+msgid "Player 2"
+msgstr ""
+
+#: tictac/templates/game_history.html:13
+msgid "Winner"
+msgstr ""
+
+#: tictac/templates/game_history.html:14
+msgid "Room code"
+msgstr ""
+
+#: tictac/templates/game_history.html:15
+msgid "Date Played"
+msgstr ""
+
+#: tictac/templates/navbar.html:56
+msgid "History"
+msgstr ""
+
+#: tictac/templates/navbar.html:67
+msgid "Log Out"
+msgstr ""
+
+#: tictac/templates/play.html:45
+msgid "Wait for the other user, if it has arrived you can refresh."
+msgstr ""
+
+#: tictac/views.py:21
+msgid "Room code not found"
+msgstr ""
+
+#: tictac/views.py:25 tictac/views.py:40
+msgid "The room is already full"
+msgstr ""
+
+#: tictac/views.py:70 tictac/views.py:76
+msgid "Invalid request method"
+msgstr ""

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Register' %}{% endblock %}
+{% block content %}
+
+<div class="container-fluid p-5 my-5">
+	<div class="row justify-content-center">
+		<div class="card card-signin">
+		  <div class="card-body">
+		    <form class="form-signin" method="post">{% csrf_token %}
+				<div class="d-flex flex-column pb-3">
+					<img class="img-fluid mx-auto d-block" width="64" height="64" src="{% static 'images/default.svg' %}" alt="logo">
+				</div>
+				<input autocomplete="email" type="email" name="email" id="inputEmail" class="form-control my-2"
+                       title="{% trans 'Email address' %}" placeholder="{% trans 'Email address' %}" required>
+				<input autocomplete="off" type="text" name="username" id="inputUsername" class="form-control my-2" title="{% trans 'Username' %}" placeholder="{% trans 'Username' %}" required>
+                <input autocomplete="given-name" type="text" minlength="3" name="first_name" id="inputFirstName" class="form-control my-2" title="First Name" placeholder="First Name" required>
+				<input autocomplete="family-name" type="text" minlength="3" name="last_name" id="inputLastName" class="form-control my-2" title="Last Name" placeholder="Last Name" required>
+                <div class="password-container">
+                    <input autocomplete="new-password" type="password" name="password1" id="inputPassword1" class="form-control my-2"
+                           title="{% trans 'Password' %}" placeholder="{% trans 'Password' %}" required>
+                    <span class="eye-icon" onclick="showPass('inputPassword1')">👁️</span>
+                </div>
+                <div class="password-container">
+                    <input autocomplete="new-password" type="password" name="password2" id="inputPassword2" class="form-control"
+                           title="{% trans 'Confirm password' %}" placeholder="{% trans 'Confirm password' %}" required>
+                    <span class="eye-icon" onclick="showPass('inputPassword2')">👁️</span>
+                </div>
+				{% for field in registration_form %}
+				<p>
+					{% for error in field.errors %}
+						<p style="color: red">{{ error }}</p>
+					{% endfor %}
+				{% endfor %}
+				{% if registration_form.non_field_errors %}
+					<div style="color: red">
+						<p>{{registration_form.non_field_errors}}</p>
+					</div>
+				{% endif %}
+				<button class="btn btn-lg btn-primary btn-block" type="submit">{% trans 'Register' %}</button>
+			</form>
+		  </div>
+		</div>
+	</div>
+</div>
+{% endblock %}

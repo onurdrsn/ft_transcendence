@@ -1,0 +1,31 @@
+{% load i18n %}
+<script>
+function CreateOrReturnPrivateChat(id){
+    let controller = new AbortController()
+    let signal = controller.signal
+
+    setTimeout(() => controller.abort(), 5000)
+    fetch("{% url 'chat:create_or_return_private_chat' %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+             'X-CSRFToken': getCookie('csrftoken'),
+        },
+        signal: signal,
+        body: JSON.stringify({
+            user2_id: id,
+        }),
+        credentials: "include",
+    })
+        .then(response => response.json())
+        .then(data => {
+            if(data['response'] === "{% trans 'Successfully.' %}") {
+                window.location.replace("{% url 'chat:private_chat_room' %}?room_id=" + data['chatroom_id'])
+            }
+            else if(data['response'] != null){
+                alert(data['response'])
+            }
+        })
+        .catch(error => console.error("{% trans 'Error' %}", error))
+	}
+</script>

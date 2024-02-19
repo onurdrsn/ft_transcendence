@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Login' %}{% endblock %}
+
+{% block content %}
+{% include 'css/style.html' %}
+
+<div class="container-fluid">
+	<div class="row justify-content-center">
+        <div class="card card-signin">
+            <div class="card-body">
+                <form class="form-signin m-auto p-10" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{% url 'account:home' %}">
+                    <div class="d-flex flex-column pb-3">
+                        <div class="img-fluid mx-auto d-block">
+                            <img class="img-fluid mx-auto d-block" src="{% static 'images/default.svg' %}" alt="logo">
+                        </div>
+				    </div>
+                    <label for="inputEmail"></label>
+                    <input autocomplete="email" type="email" name="email" id="inputEmail" class="form-control" title="{% trans 'Email address' %}" placeholder="{% trans 'Email address' %}" required autofocus>
+                    <div class="password-container">
+                        <input autocomplete="current-password" type="password" name="password" id="inputPassword" class="form-control my-2" title="{% trans 'Password' %}" placeholder="{% trans 'Password' %}" required>
+                        <span class="eye-icon" onclick="showPass('inputPassword')">👁️</span>
+                    </div>
+				    {% for field in login_form %}
+				        <p>
+				            {% for error in field.errors %}
+                                <p style="color: red">{{ error }}</p>
+				            {% endfor %}
+				        </p>
+				    {% endfor %}
+				    {% if login_form.non_field_errors %}
+				        <div style="color: red">
+				            <p>{{login_form.non_field_errors}}</p>
+				        </div>
+				    {% endif %}
+				    <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans 'Login' %}</button>
+                </form>
+                <div class="d-flex flex-column my-4">
+                  <a class="m-auto" href="{% url 'password_reset' %}">{% trans 'Reset password' %}</a>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+{% endblock content %}

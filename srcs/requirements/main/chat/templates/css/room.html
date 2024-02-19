@@ -1,0 +1,57 @@
+ <style>
+	.chat-log {
+		height: 500px;
+		overflow-x: auto;
+		overflow-y: auto;
+	}
+
+	.chat-message-input{
+		outline: none;
+		border: 1px solid #fff;
+		border-top: 2px solid var(--main-background-color);
+
+	}
+	.username-span{
+		font-weight: 500;
+        margin: 0 5px auto;
+    }
+	.friend-message-span{
+		font-weight: 380;
+        margin: 0 5px auto;
+        font-size: 0.6em;
+		color: var(--text-color);
+	}
+	.timestamp-span{
+        font-weight: normal;
+		color: var(--secondary-text-color);
+	}
+	.timestamp-span:hover{
+		cursor: pointer;
+	}
+	.msg-p{
+		font-weight: 450;
+        margin: 5px 5px auto;
+        white-space: normal;
+		-ms-word-break: break-all;
+		word-break: break-all;
+	}
+	.profile-image{
+		width: 33px;
+		height: 33px;
+		margin-top: 0;
+		margin-bottom: auto;
+	}
+	.profile-image:hover{
+		cursor: pointer;
+	}
+	.username-span:hover{
+		cursor: pointer;
+	}
+	#id_chatroom_loading_spinner{
+		position: absolute;
+	}
+	.friend-container:hover{
+		background: var(--main-background-color);
+		cursor: pointer;
+	}
+</style>

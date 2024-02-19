@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Friend List' %}{% endblock %}
+
+{% block content %}
+<style>
+	.card { border-radius: 12px; }
+</style>
+
+<div class="container">
+	<div class="p-2">
+        {% if friends %}
+            <div class="d-flex flex-row flex-wrap">
+                {% for friend in friends %}
+                    <div class="card flex-row flex-grow-1 p-2 mx-2 my-2 align-items-center">
+                        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{% url 'account:account_view' user_id=friend.0.pk %}">
+                            <div class="card-image m-2">
+                                <img class="img-fluid profile-image" src="{{friend.0.profile_image.url}}" alt="">
+                            </div>
+                        </a>
+
+			            <div class="card-center px-2">
+			            	<a class="btn" href="{% url 'account:account_view' user_id=friend.0.pk %}">
+			            		<h4 class="card-title">{{friend.0.username|truncatechars:50}}</h4>
+			            	</a>
+                            {% if friend.1 %}
+                                <a class="btn btn-bd-primary" onclick="CreateOrReturnPrivateChat('{{friend.0.id}}')">{% trans 'Send a Message' %}</a>
+			            	{% endif %}
+                        </div>
+
+                        <div class="d-flex flex-row card-right flex-grow-1 justify-content-end mx-2">
+                            {% if friend.1 %}
+                                <div class="d-flex flex-row friends-text-container p-3">
+                                    <p class="m-auto mx-1">{% trans 'Friends' %}</p>
+                                    <span class="m-auto pl-2">
+						            <svg style="color:green;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
+						            	<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+						            	<path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"></path>
+						            </svg>
+						            </span>
+					            </div>
+				            {% else %}
+				                {% if friend.0 != request.user %}
+                                    <div class="d-flex flex-row friends-text-container p-3">
+                                        <p class="m-auto mx-1">{% trans 'Not Friends' %}</p>
+                                        <span class="m-auto pl-2">
+                                            <svg style="color:red;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"></path>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                            {% if friend.0 == request.user %}
+                                <div class="d-flex flex-row friends-text-container p-3">
+                                    <p class="m-auto">{% trans 'This is you' %}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:2 %}
+                        </div><div class="d-flex flex-row flex-wrap">
+                    {% endif %}
+                {% endfor %}
+        {% else %} <!-- If no friends -->
+            <div class="d-flex flex-row flex-grow-1 justify-content-center align-items-center p-4">
+                <p>{% trans 'No friends' %} :(</p>
+            </div>
+        {% endif %}
+        </div>
+	</div>
+</div>
+{% include 'js/create_or_return_private_chat.html' %}
+{% endblock content %}

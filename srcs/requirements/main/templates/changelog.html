@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Change Log{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .version {
+            margin-bottom: 2em;
+        }
+        .version h2, .version h3 {
+            color: #f9a825;
+        }
+        .version ul {
+            list-style-type: none;
+        }
+    </style>
+    <div class="container">
+        {% include 'version_log/v1.html' %}
+        {% include 'version_log/v1.html' %}
+    </div>
+{% endblock %}

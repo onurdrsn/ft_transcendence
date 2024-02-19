@@ -1,0 +1,31 @@
+{% load i18n %}
+<script>
+	function sendFriendRequest(id) {
+        let controller = new AbortController()
+        let signal = controller.signal
+
+        setTimeout(() => controller.abort(), 5000)
+        fetch("{% url 'friend:friend_request' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            credentials: "include",  // Cookie ve headers istekleri birlikte gönderebilmesi için
+            signal: signal,
+            body: JSON.stringify({
+                receiver_user_id: id,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response === "{% trans 'Friend request sent.' %}") {
+						// UI gets updated
+                } else if (data.response !== null) {
+                    alert(data.response)
+                }
+            })
+            .catch(error => console.error("{% trans 'Error' %}", error))
+            .finally(() => location.reload())
+	}
+</script>

@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Account' %}{% endblock %}
+{% load static %}
+
+{% block content %}
+    {% include 'css/style.html' %}
+
+    {% if not is_blocked %}
+        <div class="container-fluid">
+            <div class="d-flex flex-row justify-content-center flex-wrap align-items-start">
+                <div class="card profile-card mx-auto mt-5 shadow-lg">
+                    <div class="card-body">
+                        <div class="d-flex flex-column justify-content-center p-4">
+                            {% if not is_self and is_friend == True %}
+                                <table style="margin-bottom: 1rem !important;">
+                                    <tr>
+                                        <th>Last Seen</th>
+                                        <td style="color: red;">{% if last_seen %}{{ last_seen|timesince }}{% else %}awhile{% endif %} ago</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Online</th>
+                                        <td style="{% if online == "Online" %}color: green;{% else %}color: red;{% endif %}">{{ online }}</td>
+                                    </tr>
+                                </table>
+                            {% endif %}
+                            <div class="image-container mx-auto mb-4">
+                                <img style="height: 100px; width: 100px;" class="d-block border border-dark rounded-circle img-fluid mx-auto profile-image" alt="logo" id="id_profile_image" src="{{ profile_image }}">
+                            </div>
+                            <p class="mt-4 mb-1 field-heading">{% trans 'Email' %}</p>
+                            {% if is_self %}
+                                <h5>{{ email }}</h5>
+                            {% else %}
+                                {% if not hide_email %}
+                                    <h5>{{ email }}</h5>
+                                {% else %}
+                                    <h5>{% trans 'This user hidden his email' %}</h5>
+                                {% endif %}
+                            {% endif %}
+                            <p class="mt-4 mb-1 field-heading">{% trans 'Username' %}</p>
+                            <h5>{{ username }}</h5>
+                            <p class="mt-4 mb-1 field-heading">First Name</p>
+                            <h5>{{ firstname }}</h5>
+                            <p class="mt-4 mb-1 field-heading">Last Name</p>
+                            <h5>{{ lastname }}</h5>
+                        
+                            <!-- If Auth user is viewing their own profile -->
+                            {% if is_self %}
+                                <a class="mt-4 btn btn-primary" href="{% url 'account:edit_view' user_id=id %}">{% trans 'Update' %}</a>
+                                <div class="d-flex flex-column mt-4">
+                                    <a class="m-auto" href="{% url 'password_change' %}">{% trans 'Change password' %}</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% if request.user.is_authenticated %}
+                    <div class="card d-flex flex-column mt-5">
+                        <!-- THEN to YOU -->
+                        {% if request_sent == 0 %}
+                                <div class="d-flex flex-row align-items-center m-5">
+                                    <span class="mx-2">{% trans 'Accept Friend Request' %}</span>
+                                        <a id="id_cancel_{{ id }}" class="pointer" onclick='declineFriendRequest("{{ pending_friend_request_id }}")'>
+                                            <svg style="color:red;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"></path>
+                                            </svg>
+                                        </a>
+                                        <a style="color:lawngreen;" id="id_confirm_{{ id }}" class="pointer" onclick='acceptFriendRequest("{{ pending_friend_request_id }}")'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"></path>
+                                            </svg>
+                                        </a>
+                                </div>
+                    {% endif %}
+                    <div class="m-2 p-4">
+                        <!-- Cancel Friend Request / Send Friend Request / Remove Friend -->
+                        {% if is_friend == False and is_self == False %}
+                            <!-- You sent them a request -->
+                            <div class="d-flex flex-column align-items-center">
+                                {% if request_sent == 1 %}
+                                    <button class="btn btn-danger" id="id_cancel_friend_request_btn">{% trans 'Cancel Friend Request' %}</button>
+                                {% endif %}
+                                <!-- No requests have been sent -->
+                                {% if request_sent == -1 %}
+                                    <button class="btn btn-primary" id="id_send_friend_request_btn">{% trans 'Send Friend Request' %}</button>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <div class="d-flex flex-column align-items-center pt-2">
+                            {% if not is_self %}
+                                <a class="btn btn-danger" href="#" onclick='blockFriend("{{ id }}")'>{% trans 'Block this user' %}</a>
+                            {% endif %}
+                        </div>
+                        {% if is_friend %}
+                            <a class="m-2 btn btn-secondary" href="#" onclick="removeFriend('{{ id }}')">{% trans 'Unfriend' %}</a>
+                        {% endif %}
+
+                        <!-- Friend list link -->
+                        <div class="d-flex flex-column pt-4">
+                            <a class="btn" href="{% url 'friend:friends_list_view' user_id=id %}">
+                                <div class="d-flex flex-row align-items-center justify-content-center pointer">
+                                    <h5>{% trans 'Friends' %} ({{ friends|length }})</h5>
+                                </div>
+                            </a>
+                        </div>
+                        {% if friend_request %}
+                            <div class="m-2 px-4 pb-4">
+                                <!-- Friend requests -->
+                                <div class="d-flex flex-column pt-4">
+                                    <a class="btn" href="{% url 'friend:friend_requests' user_id=id %}">
+                                        <div class="d-flex flex-row align-items-center justify-content-center pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"></path>
+                                                <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"></path>
+                                            </svg>
+                                            <span>{% trans 'Friend Requests' %} ({{ friend_request|length }})</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if is_friend %}
+                            <div class="d-flex flex-row align-items-center btn btn-primary m-2 px-4" onclick="CreateOrReturnPrivateChat('{{ id }}')">
+                                <span class="message-btn-text m-auto pl-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
+                                        <path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105"></path>
+                                    </svg>
+                                    {% trans 'Message' %}
+                                </span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="container d-flex justify-content-center align-items-center" style="height: 50vh;">
+            <a class="btn btn-secondary" href="#" onclick='unblockFriend("{{ id }}")'>{% trans 'Unblock this user' %}</a>
+        </div>
+    {% endif %}
+
+    {% include 'js/account.html' %}
+    {% include 'snippets/send.html' %}
+    {% include 'snippets/accept.html' %}
+    {% include 'snippets/decline.html' %}
+    {% include 'snippets/cancel.html' %}
+    {% include 'snippets/remove.html' %}
+    {% include 'snippets/block.html' %}
+    {% include 'snippets/unblock.html' %}
+    {% include 'js/create_or_return_private_chat.html' %}
+{% endblock %}
