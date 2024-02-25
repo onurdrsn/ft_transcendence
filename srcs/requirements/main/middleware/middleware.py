@@ -1,25 +1,20 @@
-from django.utils import translation
 from django.utils.deprecation import MiddlewareMixin
 from django.conf import settings
-from asgiref.sync import sync_to_async
 import datetime
 from django.core.cache import cache
+from django.utils.translation import activate
+from django.contrib.sessions.middleware import SessionMiddleware
 
 
-class LanguageMiddleware(MiddlewareMixin):
-
-    async def __call__(self, request):
+class LanguageMiddleware(SessionMiddleware):
+    def process_request(self, request):
+        super().process_request(request)
         language = request.POST.get('language')
         if language is not None:
-            translation.activate(language)
-            request.language = language
-            await sync_to_async(request.session.__setitem__)('lang', language)
-        elif await sync_to_async(request.session.__contains__)('lang'):
-            translation.activate(await sync_to_async(request.session.__getitem__)('lang'))
-        response = await self.get_response(request)
-        if await sync_to_async(request.session.__contains__)('lang'):
-            response.set_cookie('lang', await sync_to_async(request.session.__getitem__)('lang'))
-        return response
+            activate(language)
+            request.session['lang'] = language
+        elif 'lang' in request.session:
+            activate(request.session['lang'])
 
 
 class ActiveUserMiddleware(MiddlewareMixin):
