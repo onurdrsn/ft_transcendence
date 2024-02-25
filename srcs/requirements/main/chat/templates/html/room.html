@@ -11,9 +11,9 @@
                 <div class="card" id="id_chatroom_card">
                     <div id="id_room_title" class="card-header">
                         <a href="{% url 'account:account_view' user_id=request.user.id %}"
-                           class="btn" target="_blank" id="id_user_info_container">
+                        class="btn" target="_blank" id="id_user_info_container">
                             <div class="d-flex align-items-center">
-                                <img loading="eager" src="{% url 'account:account_view' user_id=request.user.id %}" class="rounded-circle" id="id_other_user_profile_image" alt="profile_logo">
+                                <img loading="eager" src="{% if user_id == request.user.id  %}{% url 'account:account_view' user_id=request.user.id %}{% else %}{% static 'images/default.svg' %}{% endif %}" class="rounded-circle" id="id_other_user_profile_image" alt="profile_logo">
                                 <h3 id="id_other_username"></h3>
                             </div>
                         </a>

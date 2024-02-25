@@ -20,12 +20,12 @@ msgstr ""
 
 #: account/forms.py:21 account/forms.py:58
 #, python-brace-format
-msgid "Email \"{email}\" is already in use."
+msgid "Email \"{}\" is already in use."
 msgstr ""
 
 #: account/forms.py:29 account/forms.py:66
 #, python-brace-format
-msgid "Username \"{username}\" is already in use."
+msgid "Username \"{}\" is already in use."
 msgstr ""
 
 #: account/forms.py:43
@@ -259,7 +259,7 @@ msgstr ""
 
 #: chat/exceptions.py:15
 #, python-brace-format
-msgid "ClientError(code = {self.code}, message =  {self.message})"
+msgid "ClientError(code = {}, message = {})"
 msgstr ""
 
 #: chat/templates/html/room.html:4 templates/part/navbar.html:20
@@ -343,7 +343,7 @@ msgstr ""
 
 #: chat/views.py:56
 #, python-brace-format
-msgid "Friend object not found for user: {user}"
+msgid "Friend object not found for user: {}"
 msgstr ""
 
 #: chat/views.py:104

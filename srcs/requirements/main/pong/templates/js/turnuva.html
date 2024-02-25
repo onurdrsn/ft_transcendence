@@ -1,0 +1,248 @@
+<script>
+	const canvas = document.getElementById("pong");
+	const context = canvas.getContext("2d");
+
+	const player1Name = document.getElementById("player1-name");
+	const player2Name = document.getElementById("player2-name");
+	const player3Name = document.getElementById("player3-name");
+	const startButton = document.getElementById("start-button");
+
+	player1Name.required = true;
+	player2Name.required = true;
+	player3Name.required = true;
+	startButton.disabled = true;
+
+	context.font = "20px Arial";
+	context.fillStyle = "White";
+	context.fillText("Lütfen Dikkat! Tüm Oyuncuların Adını Girmeden Oyun Baslamaz", canvas.width / 2 - 255, canvas.height / 2);
+
+	const handleInputChange = () => {
+	  // Tüm metin kutularının doldurulup doldurulmadığını kontrol ediyor
+	  const allFieldsFilled = player1Name.value && player2Name.value && player3Name.value;
+
+	  // Tüm metin kutuları doldurulmuşsa oyun başlatma düğmesini etkinleştiriyor
+	  if (allFieldsFilled) {
+		startButton.disabled = false;
+	  } else {
+		startButton.disabled = true;
+	  }
+	};
+	// Metin kutularına veri girişi yapıldığında olay işleyicisini ekliyor
+	player1Name.addEventListener("input", handleInputChange);
+	player2Name.addEventListener("input", handleInputChange);
+	player3Name.addEventListener("input", handleInputChange);
+
+
+
+	const paddleWidth = 10;
+	const paddleHeight = 80;
+	let player1Y = canvas.height / 2 - paddleHeight / 2;
+	let player2Y = canvas.height / 2 - paddleHeight / 2;
+
+	let paddleColor1 = "#fff";
+	let paddleColor2 = "#fff";
+
+	let ballX = canvas.width / 2;
+	let ballY = canvas.height / 2;
+	const ballRadius = 10;
+	let ballSpeedX = 6;
+	let ballSpeedY = 6;
+	let ballColor = "#fff";
+
+	let player1Score = 0;
+	let player2Score = 0;
+	const winningScore = 11;
+
+	let yfinal;
+	let final;
+	let kazanan;
+
+
+	let tek = true;
+	let gameOver = false;
+
+	let wPressed = false;
+	let sPressed = false;
+	let upArrowPressed = false;
+	let downArrowPressed = false;
+
+	window.addEventListener("keydown", handleKeyDown);
+	window.addEventListener("keyup", handleKeyUp);
+
+	function toggleSettings() {
+		var colorButtons = document.getElementById("color-buttons");
+		if (colorButtons.style.display === "none") {
+			colorButtons.style.display = "block";
+		} else {
+			colorButtons.style.display = "none";
+		}
+	}
+
+	function handleKeyDown(event) {
+		if (event.key === "w") {
+			wPressed = true;
+		}
+		if (event.key === "s") {
+			sPressed = true;
+		}
+		if (event.key === "ArrowUp") {
+			upArrowPressed = true;
+		}
+		if (event.key === "ArrowDown") {
+			downArrowPressed = true;
+		}
+	}
+
+	function handleKeyUp(event) {
+		if (event.key === "w") {
+			wPressed = false;
+		}
+		if (event.key === "s") {
+			sPressed = false;
+		}
+		if (event.key === "ArrowUp") {
+			upArrowPressed = false;
+		}
+		if (event.key === "ArrowDown") {
+			downArrowPressed = false;
+		}
+	}
+
+	let playerName1 = document.getElementById('playerName1');
+	let playerName2 = document.getElementById('playerName2');
+
+	function render() {
+		if (!gameOver){
+			context.fillStyle = "#222";
+			context.fillRect(0, 0, canvas.width, canvas.height);
+
+			context.fillStyle = "#fff";
+			context.fillRect(canvas.width / 2 - 2, 0, 4, canvas.height);
+
+			context.fillStyle = paddleColor1;
+			context.fillRect(10, player1Y, paddleWidth, paddleHeight);
+			context.fillStyle = paddleColor2;
+			context.fillRect(canvas.width - paddleWidth - 10, player2Y, paddleWidth, paddleHeight);
+
+			context.fillStyle = ballColor;
+			context.beginPath();
+
+			context.arc(ballX, ballY, ballRadius, 0, Math.PI * 2, false);
+			context.closePath();
+			context.fill();
+		}
+
+		if (ballX - ballRadius < paddleWidth && ballY > player1Y && ballY < player1Y + paddleHeight) {
+			ballSpeedX = -ballSpeedX;
+		} else if (ballX + ballRadius > canvas.width - paddleWidth && ballY > player2Y && ballY < player2Y + paddleHeight) {
+			ballSpeedX = -ballSpeedX;
+		}
+
+		ballX += ballSpeedX;
+		ballY += ballSpeedY;
+
+		if (ballY - ballRadius < 0 || ballY + ballRadius > canvas.height) {
+			ballSpeedY = -ballSpeedY;
+		}
+
+		if (ballX - ballRadius < 0) {
+			player2Score++;
+			resetBall();
+		} else if (ballX + ballRadius > canvas.width) {
+			player1Score++;
+			resetBall();
+		}
+
+		document.getElementById("player1-score").textContent = player1Score;
+		document.getElementById("player2-score").textContent = player2Score;
+		if(tek){
+			playerName1.textContent  = player1Name.value + ' ' ;
+			playerName2.textContent  = player2Name.value + ' ' ;
+		}else{
+			playerName1.textContent  = yfinal + ' ' ;
+			playerName2.textContent  = final + ' ' ;
+		}
+
+		if(player1Score === winningScore || player2Score === winningScore) {
+			if (tek){
+				if (player1Score > player2Score)
+					yfinal = player1Name.value;
+				else
+					yfinal = player2Name.value;
+				final = player3Name.value;
+			}
+			else{
+				if (player1Score > player2Score)
+					kazanan = yfinal;
+				else
+					kazanan = final;
+			}
+			gameOver = true;
+		}
+
+		if (wPressed && player1Y > 0) {
+			player1Y -= 4;
+		}
+		if (sPressed && player1Y < canvas.height - paddleHeight) {
+			player1Y += 4;
+		}
+		if (upArrowPressed && player2Y > 0) {
+			player2Y -= 4;
+		}
+		if (downArrowPressed && player2Y < canvas.height - paddleHeight) {
+			player2Y += 4;
+		}
+
+		if (gameOver){
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			context.font = "30px Arial";
+			context.fillStyle = "White";
+
+			if (tek){
+				context.fillText("Yarı Final Kazananı: " + yfinal, canvas.width / 2 - 200, canvas.height / 2);
+				setTimeout(function() {
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					alert("Sıradaki Maç: " + yfinal + " - " + final);
+					context.fillText("Sıradaki Maç: " + yfinal + " - " + final, canvas.width / 2 - 180, canvas.height / 2);
+					setTimeout(function() {
+						document.getElementById("final-button").style.display = "block";
+					}, 2000);
+				}, 3000);
+			}else{
+				context.fillText("Kazanan: " + kazanan, canvas.width / 2 - 100, canvas.height / 2);
+				setTimeout(function() {
+					window.location.href = '{% url "pong:home" %}';
+				}, 3000);
+			}
+		}
+		else {
+			requestAnimationFrame(render);
+		}
+	}
+
+	function resetBall() {
+		ballX = canvas.width / 2;
+		ballY = (canvas.height / 2) * Math.random();
+		ballSpeedX = -ballSpeedX;
+		ballSpeedY = 6;
+	}
+
+	function StartGame() {
+		document.getElementById("start-button").style.display = "none";
+		player1Name.hidden = true;
+		player2Name.hidden = true;
+		player3Name.hidden = true;
+		requestAnimationFrame(render);
+	}
+
+	function FinalGame(){
+		player1Score = 0;
+		player2Score = 0;
+		document.getElementById("player1-score").textContent = player1Score;
+		document.getElementById("player2-score").textContent = player2Score;
+		document.getElementById("final-button").style.display = "none";
+		tek = false;
+		gameOver = false;
+		StartGame();
+	}
+</script>

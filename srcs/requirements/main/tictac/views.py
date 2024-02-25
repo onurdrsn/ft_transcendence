@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.utils.translation import gettext_lazy as _
 import json
+import time
 
 
 @login_required
@@ -14,15 +15,20 @@ def tictac(request):
         user = request.user.username
         option = request.POST.get('option')
         room_code = request.POST.get('room_code')
-
+        if room_code is None:
+            messages.error(request, _("oda bilgisi alınamadı oda adı {}").format(room_code))
+            time.sleep(2)
+            return redirect("/tictac")
         if option == '1':
             game = TicTacToe.objects.filter(room_code=room_code).first()
             if game is None:
-                messages.success(request, _("Room code not found"))
+                messages.error(request, _("Room code not found"))
+                time.sleep(2)
                 return HttpResponseRedirect('/tictac')
 
             if game.player_count() >= 2:
-                messages.success(request, _("The room is already full"))
+                messages.error(request, _("The room is already full"))
+                time.sleep(2)
                 return HttpResponseRedirect('/tictac')
 
             game.game_opponent = user
@@ -30,16 +36,22 @@ def tictac(request):
             return redirect('/tictac/' + room_code)
 
         elif option == '2':
-            game = TicTacToe.objects.filter(room_code=room_code).first()
+            game = get_object_or_404(TicTacToe, room_code=room_code)
             if game is None:
-                game = TicTacToe(game_creator=user, room_code=room_code)
-                game.save()
+                messages.success(request, _("The room does not exist"))
+                time.sleep(2)
+                return redirect("/tictac")
+            if game.game_creator == user:
                 return redirect('/tictac/' + room_code)
-
+            elif game.game_opponent == user and game.game_creator != user:
+                return redirect('/tictac/' + room_code)
             if game.player_count() >= 2:
-                messages.success(request, _("The room is already full"))
-                return HttpResponseRedirect('/tictac')
-
+                messages.success(request, _("The room is already full or finish"))
+                time.sleep(2)
+                return redirect("pong:home")
+            game.game_opponent = user
+            game.save()
+            return redirect('/tictac/' + room_code)
     return render(request, "front.html")
 
 

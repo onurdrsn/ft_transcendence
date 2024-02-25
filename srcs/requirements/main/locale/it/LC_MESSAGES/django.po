@@ -20,13 +20,13 @@ msgstr ""
 
 #: account/forms.py:21 account/forms.py:58
 #, python-brace-format
-msgid "Email \"{email}\" is already in use."
-msgstr "L'email \"{email}\" è già in uso."
+msgid "Email \"{}\" is already in use."
+msgstr "L'email \"{}\" è già in uso."
 
 #: account/forms.py:29 account/forms.py:66
 #, python-brace-format
-msgid "Username \"{username}\" is already in use."
-msgstr "Il nome utente \"{username}\" è già in uso."
+msgid "Username \"{}\" is already in use."
+msgstr "Il nome utente \"{}\" è già in uso."
 
 #: account/forms.py:43
 msgid "Invalid login"
@@ -261,8 +261,8 @@ msgstr "Impossibile ottenere le informazioni di quell'utente."
 
 #: chat/exceptions.py:15
 #, python-brace-format
-msgid "ClientError(code = {self.code}, message =  {self.message})"
-msgstr "ErroreClient(codice = {self.code}, messaggio =  {self.message})"
+msgid "ClientError(code = {}, message = {})"
+msgstr "ErroreClient(codice = {}, messaggio = {})"
 
 #: chat/templates/html/room.html:4 templates/part/navbar.html:20
 #: tictac/templates/navbar.html:20
@@ -345,8 +345,8 @@ msgstr "Connessione WebSocket..."
 
 #: chat/views.py:56
 #, python-brace-format
-msgid "Friend object not found for user: {user}"
-msgstr "Oggetto amico non trovato per l'utente: {user}"
+msgid "Friend object not found for user: {}"
+msgstr "Oggetto amico non trovato per l'utente: {}"
 
 #: chat/views.py:104
 msgid "Unable to start a chat with that user."

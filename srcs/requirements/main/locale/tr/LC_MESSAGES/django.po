@@ -20,13 +20,13 @@ msgstr ""
 
 #: account/forms.py:21 account/forms.py:58
 #, python-brace-format
-msgid "Email \"{email}\" is already in use."
-msgstr "E-posta \"{email}\" zaten kullanımda."
+msgid "Email \"{}\" is already in use."
+msgstr "E-posta \"{}\" zaten kullanımda."
 
 #: account/forms.py:29 account/forms.py:66
 #, python-brace-format
-msgid "Username \"{username}\" is already in use."
-msgstr "Kullanıcı adı \"{username}\" zaten kullanımda."
+msgid "Username \"{}\" is already in use."
+msgstr "Kullanıcı adı \"{}\" zaten kullanımda."
 
 #: account/forms.py:43
 msgid "Invalid login"
@@ -259,8 +259,8 @@ msgstr "Kullanıcı bilgilerine ulaşılamıyor."
 
 #: chat/exceptions.py:15
 #, python-brace-format
-msgid "ClientError(code = {self.code}, message =  {self.message})"
-msgstr "İstemci Hatası (kod = {self.code}, mesaj = {self.message})"
+msgid "ClientError(code = {}, message = {})"
+msgstr "İstemci Hatası (kod = {}, mesaj = {})"
 
 #: chat/templates/html/room.html:4 templates/part/navbar.html:20
 #: tictac/templates/navbar.html:20
@@ -281,7 +281,7 @@ msgstr "Gönder"
 
 #: chat/templates/html/room.html:73
 msgid "No message your friends"
-msgstr "Arkadaşlarınızdan mesaj bulunamadı."
+msgstr "Arkadaşlarınızdan mesaj bulunamadı"
 
 #: chat/templates/html/room.html:90
 msgid "Socket Client Error"
@@ -343,8 +343,8 @@ msgstr "WebSocket bağlanıyor..."
 
 #: chat/views.py:56
 #, python-brace-format
-msgid "Friend object not found for user: {user}"
-msgstr "Kullanıcı için arkadaş nesnesi bulunamadı: {user}"
+msgid "Friend object not found for user: {}"
+msgstr "Kullanıcı için arkadaş nesnesi bulunamadı: {}"
 
 #: chat/views.py:104
 msgid "Unable to start a chat with that user."

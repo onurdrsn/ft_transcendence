@@ -18,19 +18,17 @@ SECRET_KEY = "django-insecure-#u+!b2hbhf$fz#1a=x-dpo!78on7r(%3x9b5y4!ri*p8vtl&v!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = True
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-PASSWORD_RESET_TIMEOUT_DAYS = 1
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost", "onur.pythonanywhere.com"]
+
 AUTH_USER_MODEL = 'account.User'
 
 WSGI_APPLICATION = "main.wsgi.application"
 ASGI_APPLICATION = "main.asgi.application"
+
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
 
 USER_ONLINE_TIMEOUT = 10
 USER_LAST_SEEN_TIMEOUT = 60 * 60 * 24 * 7
@@ -39,6 +37,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
     'account.backend.CaseInsensitiveEmailBackend',
 )
+LOGIN_URL = "account:login"
 
 # WebSocket protocol
 # CHANNEL_LAYERS = {
@@ -62,6 +61,7 @@ INSTALLED_APPS = [
     'chat',
     'friend',
     'tictac',
+    'pong',
 
     # third party
     'daphne',
@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'channels',
-    'django_prometheus',
 ]
 
 MIDDLEWARE = [
@@ -110,25 +109,18 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-"""
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-"""
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'advenced',
+        'NAME': 'test',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',  # host -> localhost docker -> postgres
         'PORT': '5432',
     },
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -156,7 +148,6 @@ TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
-
 USE_TZ = True
 
 BASE_URL = "http://[::]:8000"
@@ -166,12 +157,12 @@ DATA_UPLOAD_MEMORY_SIZE = 10485760  # 10 MB
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "static/"  # for client
 MEDIA_URL = "/media/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')  # for server
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
 USE_L10N = True
 
 LOCALE_PATHS = [

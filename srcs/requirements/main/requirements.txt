@@ -11,7 +11,9 @@ constantly==23.10.4
 cryptography==42.0.2
 daphne==4.0.0
 Django==5.0.2
+django-environ==0.11.2
 django-prometheus==2.4.0.dev5
+environ==1.0
 hyperlink==21.0.0
 idna==3.6
 incremental==22.10.0

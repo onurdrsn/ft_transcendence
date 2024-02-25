@@ -1,0 +1,102 @@
+<script>
+    const socket = new WebSocket(`${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws/anasayfa/`);
+
+    socket.onopen = function() {
+        fetchRooms();
+        socket.send(JSON.stringify(data = {type: 'update', sayfa: 'yenile'}));
+    };
+
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        if (data.sayfa === 'yenile') {
+            fetchRooms();
+        }
+    };
+
+    socket.onclose = function() {
+        fetchRooms();
+        socket.send(JSON.stringify(data = {type: 'update', sayfa: 'yenile'}));
+    };
+
+    window.addEventListener('beforeunload', function() {
+        fetchRooms();
+        socket.send(JSON.stringify(data = {type: 'update', sayfa: 'yenile'}));
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById("submitHistory").onclick = function() {
+            fetchRooms();
+            socket.send(JSON.stringify(data = {type: 'update', sayfa: 'yenile'}));
+        };
+
+        document.getElementById("submitTurnuva").onclick = function() {
+            fetchRooms();
+            socket.send(JSON.stringify(data = {type: 'update', sayfa: 'yenile'}));
+        };
+
+        document.getElementById("submitStart").onclick = function(e) {
+            fetchRooms();
+            socket.send(JSON.stringify(data = {type: 'update', sayfa: 'yenile'}));
+            if (document.getElementById('oda_ismi').value === '') {
+                e.preventDefault();
+                alert('Lütfen bir oda adı girin.');
+            }
+        };
+
+        if(document.getElementById('submit'))
+        {
+            document.getElementById("submit").onclick = function(){
+                fetchRooms();
+                socket.send(JSON.stringify(data = {type: 'update', sayfa: 'yenile'}));
+            };
+        }
+    });
+
+    function fetchRooms() {
+        fetch('/fetch-rooms')
+            .then(response => response.json())
+            .then(data => {
+                updateRoomsList(data.rooms);
+            })
+        //.catch(error => console.error('Hata:', error));
+    }
+
+    function submitForm(button) {
+        const roomName = button.dataset.roomName;
+        const option = document.querySelector('#formSubmit input[name="option"]');
+        const odaIsmi = document.querySelector('#formSubmit input[name="oda_ismi"]');
+        if (roomName === '' && option.value === '' && odaIsmi.value === '') {
+            alert('Oda ismi boş :)');
+        } else {
+            option.value = '2'
+            odaIsmi.value = roomName;
+            document.getElementById('submitForm').submit()
+        }
+    }
+
+    function updateRoomsList(rooms) {
+        const tableBody = document.querySelector('#rooms-table tbody');
+        tableBody.innerHTML = '';
+        rooms.forEach(room => {
+            let creator = room.creator;
+            if (room.size < 2 && room.opponent === null) {
+                if (room.creator === '{{ request.user.username }}') {
+                    creator = 'Siz';
+                }
+                if (room.name) {
+                    tableBody.innerHTML += `
+                           <tr>
+                               <td>${room.name}</td>
+                               <td>${creator}</td>
+                               <td>${room.is_over ? 'Bitmiş' : 'Devam ediyor'}</td>
+                               <td>
+                                   <input type="hidden" id="option" name="option" value='2'>
+                                   <input type="hidden" id="oda_ismi" name="oda_ismi" value="${room.name}">
+                                   <button type="submit" onclick="submitForm(this)" class="btn btn-sm btn-secondary" data-room-name="${room.name}">Join</button>
+                               </td>
+                           </tr>`;
+                }
+            }
+        });
+    }
+</script>

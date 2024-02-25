@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Pong Anasayfası" %}{% endblock %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'chat/css/styles.css' %}">
+    <div class="container mt-5 pt-5">
+        <h2 class="text-center">Ping Pong</h2>
+        <h3 class="text-center"> {% trans 'Merhaba' %}, {{ request.user.username }}</h3>
+        {% if messages %}
+            {% for messages in messages %}
+                <div class="alert alert-dark">
+                    {{ messages }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form id="formSubmit" method="post" action="{% url 'pong:home' %}">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="col-12">
+                        <label class="form-label">Oda Adı
+                            <input type="hidden" id="option" name="option" value='1'>
+                            <input type="text" id="oda_ismi" name="oda_ismi" title="{% trans 'Oluşturalacak oda adı giriniz' %}" placeholder="{% trans 'Oluşturalacak oda adı giriniz' %}" class="form-control">
+                        </label>
+                        <button type="submit" id="submitStart" class="btn btn-primary" style="background-color:#7a1b0c;">{% trans 'Oyunu Başlat' %}</button>
+
+                    </div>
+                    <div class="col-12">
+                        <br>
+                        <a href="{% url 'pong:history' %}" id="submitHistory" class="btn btn-dark">{% trans 'Oyun Geçmiş Tablosu' %}</a>
+                        <a href="{% url 'pong:tournament' %}" id="submitTurnuva" class="btn btn-success">{% trans 'Turnuva Oyna' %}</a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped" id="rooms-table">
+                <thead>
+                    <tr>
+                        <th>{% trans 'Room Name' %}</th>
+                        <th>{% trans 'Creator' %}</th>
+                        <th>{% trans 'Is Over' %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    {% include 'js/anasayfa.html' %}
+{% endblock %}

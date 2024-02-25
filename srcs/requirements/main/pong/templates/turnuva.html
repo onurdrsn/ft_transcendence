@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Turnuva' %}{% endblock %}
+{% block content %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div id="player-input">
+                    <input type="text" class="form-control mb-2" placeholder="{% trans 'Oyuncu 1 Takma Adı' %}" id="player1-name">
+                    <input type="text" class="form-control mb-2" placeholder="{% trans 'Oyuncu 2 Takma Adı' %}" id="player2-name">
+                    <input type="text" class="form-control mb-2" placeholder="{% trans 'Oyuncu 3 Takma Adı' %}" id="player3-name">
+                </div>
+                <div id="settings-button" class="mb-3">
+                    <button id="start-button" onclick="StartGame()" class="btn btn-primary">{% trans 'Oyunu Başlat' %}</button>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div id="scoreboard" class="text-center mt-3">
+                    <label id="playerName1"></label><span class="fs-5" id="player1-score">0</span> - <label id="playerName2"></label><span class="fs-5" id="player2-score">0</span>
+                </div>
+                <canvas id="pong" class="border border-dark bg-secondary" width="800" height="500"></canvas>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <button onclick="FinalGame()" id="final-button" class="btn btn-primary" style="display : none">{% trans 'Finali Oyunu Başlat' %}</button>
+            </div>
+        </div>
+    </div>
+    {% include 'js/turnuva.html' %}
+{% endblock %}

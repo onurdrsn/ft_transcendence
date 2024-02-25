@@ -11,6 +11,7 @@ urlpatterns = [
     path('chat/', include('chat.urls', namespace='chat')),
     path('friend/', include('friend.urls', namespace='friend')),
     path('tictac/', include('tictac.urls', namespace='tictac')),
+    path('pong/', include('pong.urls', namespace='pong')),
     path('changelog', changelog, name='changelog'),
 ]
 
@@ -24,15 +25,15 @@ urlpatterns += [
 
 urlpatterns += [
     path('change/done/', PasswordChangeDoneView.as_view(template_name='password/change_done.html'),
-         name='password_change_done'),
+        name='password_change_done'),
     path('change/', PasswordChangeView.as_view(template_name='password/change.html'),
-         name='password_change'),
+        name='password_change'),
     path('reset/done/', PasswordResetCompleteView.as_view(template_name='password/reset_done.html'),
-         name='password_reset_done'),
+        name='password_reset_done'),
     path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/', PasswordResetMyView.as_view(), name='password_reset'),
     path('complete/', PasswordResetCompleteView.as_view(template_name='password/reset_complete.html'),
-         name='password_reset_complete'),
+        name='password_reset_complete'),
 ]
 
 handler404 = 'main.views.handler404'
