@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'chat',
     'friend',
     'tictac',
+    'pong',
 
     # third party
     'daphne',
