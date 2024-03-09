@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf.urls.static import static
-from .views import *
+from main.views import *
 from django.contrib.auth.views import *
-from django.utils.translation import gettext as _
 from pong.views import fetch_rooms
 from django.views.static import serve
+
 
 urlpatterns = [
 	re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),

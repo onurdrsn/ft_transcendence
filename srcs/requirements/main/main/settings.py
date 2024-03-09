@@ -9,6 +9,14 @@ env = environ.Env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+PASSWORD_RESET_TIMEOUT_DAYS = 1
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -20,11 +28,12 @@ DEBUG = False
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-ALLOWED_HOSTS = ["localhost", "onur.pythonanywhere.com"]
+ALLOWED_HOSTS = ["onur.pythonanywhere.com"]
 
 AUTH_USER_MODEL = 'account.User'
+LOGIN_URL = "account:login"
 
-# CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://onur.pythonanywhere.com",
@@ -45,33 +54,18 @@ ASGI_APPLICATION = "main.asgi.application"
 USER_ONLINE_TIMEOUT = 10
 USER_LAST_SEEN_TIMEOUT = 60 * 60 * 24 * 7
 
-LOGIN_URL = "account:login"
-
-# WebSocket protocol
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": env('CHANNEL_BACKEND'),
-        "CONFIG": {
-            "hosts": [(env('CHANNEL_HOST'), env('CHANNEL_PORT'))],
-        },
-    },
-}
-"""
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer'
     }
 }
-"""
 INSTALLED_APPS = [
-#     my party
     'account',
     'chat',
     'friend',
     'tictac',
     'pong',
 
-#     third party
     'daphne',
     'channels',
     "django.contrib.admin",
@@ -81,7 +75,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'whitenoise.runserver_nostatic',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -114,26 +107,10 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "middleware.middleware.add_variable_to_context",
             ],
         },
     },
 ]
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': env('POSTGRES_ENGINE'),
-        'NAME': env('POSTGRES_DB'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('POSTGRES_HOST'),
-        'PORT': env('POSTGRES_PORT'),
-    },
-}
-"""
 
 DATABASES = {
     "default": {
@@ -141,8 +118,6 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -159,22 +134,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
-
 TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
 USE_TZ = True
 
-BASE_URL = "https://[::]:8000"
+BASE_URL = "https://onur.pythonanywhere.com"
 
 DATA_UPLOAD_MEMORY_SIZE = 10485760  # 10 MB
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
@@ -204,15 +172,4 @@ LANGUAGE_COOKIE_NAME = "django_language"
 LANGUAGE_COOKIE_AGE = 31536000
 LANGUAGE_REDIRECT = True
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#zdefault-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = True
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-PASSWORD_RESET_TIMEOUT_DAYS = 1

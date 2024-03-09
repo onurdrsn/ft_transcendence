@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
+/*
 document.querySelectorAll('a').forEach(function(link) {
     link.addEventListener('click', function(event) {
         event.preventDefault();
@@ -46,7 +46,10 @@ document.querySelectorAll('a').forEach(function(link) {
         })
             .then(response => response.text())
             .then(data => {
-                document.querySelector('#contentPage').innerHTML = data;
+                if (document.querySelector('#contentPage') && document.querySelector('#contentPage').innerHTML) {
+                    document.querySelector('#contentPage').innerHTML = data;
+                }
             });
     });
 });
+*/

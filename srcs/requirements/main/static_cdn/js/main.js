@@ -35,20 +35,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-var links = document.querySelectorAll('a');
-
-links.forEach(function(link) {
+/*
+document.querySelectorAll('a').forEach(function(link) {
     link.addEventListener('click', function(event) {
         event.preventDefault();
-        var url = this.getAttribute('href');
-        fetch(url, {
+        var href = this.getAttribute('href');
+        fetch(href, {
+            redirect: 'follow',
             credentials: 'include',
         })
             .then(response => response.text())
             .then(data => {
-                event.preventDefault();
-                document.querySelector('#contentPage').innerHTML = "";
-                document.querySelector('#contentPage').innerHTML = data;
+                if (document.querySelector('#contentPage') && document.querySelector('#contentPage').innerHTML) {
+                    document.querySelector('#contentPage').innerHTML = data;
+                }
             });
     });
 });
+*/
