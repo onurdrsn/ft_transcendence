@@ -27,13 +27,11 @@ AUTH_USER_MODEL = 'account.User'
 # CSRF_COOKIE_SECURE = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://odursun.42.fr",
-    "https://192.168.1.251",
+    "https://onur.pythonanywhere.com",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://odursun.42.fr',
-    'https://192.168.1.251',
+    'https://onur.pythonanywhere.com',
 ]
 
 AUTHENTICATION_BACKENDS = (
