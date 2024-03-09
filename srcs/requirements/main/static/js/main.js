@@ -34,3 +34,19 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('languageForm').submit();
     });
 });
+
+
+document.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function(event) {
+        event.preventDefault();
+        var href = this.getAttribute('href');
+        fetch(href, {
+            redirect: 'follow',
+            credentials: 'include',
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('#contentPage').innerHTML = data;
+            });
+    });
+});

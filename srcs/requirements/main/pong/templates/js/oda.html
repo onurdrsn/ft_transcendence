@@ -1,8 +1,9 @@
 {{room_name|json_script:"roomName"}}
+{% load i18n %}
 <script>
 	const oda = JSON.parse(document.getElementById("roomName").textContent);
-    console.log(oda)
     const s = new WebSocket(`${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws/pong/${oda}`);
+
 
 	// Oyuncu Ayarı
 	var playerCount = 0;
@@ -13,7 +14,6 @@
 
 	// WebSocket bağlantısı açıldığında tetiklenen olay işleyicisi
 	s.onopen = function() {
-		console.log('WebSocket bağlantısı açıldı.');
 		if (user === p2Socket && p2 && (player1Score === 0 && player2Score === 0)){
 			if(player1Score === 0 && player2Score === 0)
 				s.send(JSON.stringify(data = {type: 'update', player: 1}));
@@ -34,13 +34,12 @@
 			else{
 				context.font = "30px Arial";
 				context.fillStyle = "White";
-				context.fillText("Oyuncu Beklenmekte...", canvas.width / 2 - 150, canvas.height / 2);
+				context.fillText("{% trans 'Player Pending' %}...", canvas.width / 2 - 150, canvas.height / 2);
 			}
 		}
 	};	
 	// WebSocket bağlantısı kapandığında tetiklenen olay işleyicisi
 	s.onclose = function() {
-		console.log('WebSocket bağlantısı kapandı.');
 		gameOver = true;
 		sendGameOver();
 		setTimeout(function() {
@@ -81,7 +80,7 @@
 	var player2Score = 0;
 	const winnerScore = 11;
 
-	// Oyun Durumu
+	// Game State
 	var gameOver = false;
 
 	// Topu hareket ettirmek için kullanılan fonksiyon
@@ -211,12 +210,12 @@
 			.then(response => response.json())
 			.then(data => {
 				if (data.success) {
-					console.log('Winner updated successfully.');
+					// updated
 				} else {
-					console.error('Failed to update winner:', data.error);
+					console.error("{% trans 'Failed to update winner:' %}", data.error);
 				}
 			})
-			.catch(error => console.error('Error updating winner:', error));
+			.catch(error => console.error("{% trans 'Error updating winner:' %}", error));
 		}
 	}
 
@@ -288,18 +287,17 @@
 		}
 	}
 
-	document.addEventListener("keydown", function(event) {
-		/*if (!bas) {
-			bas = true;
-			updatePaddleAndScore(event);
-		}*/
+	// document.addEventListener("keydown", function(event) {
+	// 	if (!bas) {
+	// 		bas = true;
+	// 		updatePaddleAndScore(event);
+	// 	}
+	// 	updatePaddleAndScore(event);
+	// });
+	
+	document.addEventListener("keyup", function(event) {
 		updatePaddleAndScore(event);
 	});
-	
-	{% comment %} document.addEventListener("keyup", function(event) {
-		bas = false;
-	}); {% endcomment %}
-
 	function resetBall() {
 		ballPosition.x = canvas.width / 2;
 		ballPosition.y = (canvas.height / 2 ) * Math.random();
@@ -331,20 +329,20 @@
 	function updatePaddleAndScore(event){
 		if(p1Socket == user){
 			if (event.key === "w" && player1Y > 0) {
-				player1Y -= 10;
+				player1Y -= 30;
 				sendPlayer1PaddlePosition();
 			}
 			if (event.key === "s" && player1Y < canvas.height - paddleHeight) {
-				player1Y += 10;
+				player1Y += 30;
 				sendPlayer1PaddlePosition();
 			}
 		}else{
 			if (event.key === "ArrowUp" && player2Y > 0) {
-				player2Y -= 10;
+				player2Y -= 30;
 				sendPlayer2PaddlePosition();
 			}
 			if (event.key === "ArrowDown" && player2Y < canvas.height - paddleHeight) {
-				player2Y += 10;
+				player2Y += 30;
 				sendPlayer2PaddlePosition();
 			}
 		}
@@ -386,7 +384,7 @@
 			moveBall();
 			sendBallPosition();
 			lastUpdateTime = timestamp;
-		  }
+		}
 		// Canvas'ı temizler
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		if (gameOver) {
@@ -395,15 +393,15 @@
 			context.fillStyle = "White";
 			if (winnerScore === player1Score){
 				if (p1Socket === user)
-					context.fillText("Kazandın!", canvas.width / 2 - 80, canvas.height / 2);
+					context.fillText("{% trans 'You Won!' %}", canvas.width / 2 - 80, canvas.height / 2);
 				else
-					context.fillText("Kaybettin!", canvas.width / 2 - 80, canvas.height / 2);
+					context.fillText("{% trans 'You Lost!' %}!", canvas.width / 2 - 80, canvas.height / 2);
 			}
 			else{
 				if (p2Socket === user)
-					context.fillText("Kazandın!", canvas.width / 2 - 80, canvas.height / 2);
+					context.fillText("{% trans 'You Won!' %}", canvas.width / 2 - 80, canvas.height / 2);
 				else
-					context.fillText("Kaybettin!", canvas.width / 2 - 80, canvas.height / 2);
+					context.fillText("{% trans 'You Lost!' %}!", canvas.width / 2 - 80, canvas.height / 2);
 			}
 			setTimeout(function() {
 				window.location.href = '{% url "pong:home" %}';

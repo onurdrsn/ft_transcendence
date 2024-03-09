@@ -1,3 +1,4 @@
+{% load i18n %}
 <script>
 	const canvas = document.getElementById("pong");
 	const context = canvas.getContext("2d");
@@ -12,9 +13,9 @@
 	player3Name.required = true;
 	startButton.disabled = true;
 
-	context.font = "20px Arial";
+	context.font = "22px Arial";
 	context.fillStyle = "White";
-	context.fillText("Lütfen Dikkat! Tüm Oyuncuların Adını Girmeden Oyun Baslamaz", canvas.width / 2 - 255, canvas.height / 2);
+	context.fillText("{% trans 'Please Attention: Enter the names of the players!' %}", canvas.width / 2 - 255, canvas.height / 2);
 
 	const handleInputChange = () => {
 	  // Tüm metin kutularının doldurulup doldurulmadığını kontrol ediyor
@@ -199,17 +200,17 @@
 			context.fillStyle = "White";
 
 			if (tek){
-				context.fillText("Yarı Final Kazananı: " + yfinal, canvas.width / 2 - 200, canvas.height / 2);
+				context.fillText("{% trans 'Semi-Final Winner: ' %}" + yfinal, canvas.width / 2 - 200, canvas.height / 2);
 				setTimeout(function() {
 					context.clearRect(0, 0, canvas.width, canvas.height);
-					alert("Sıradaki Maç: " + yfinal + " - " + final);
-					context.fillText("Sıradaki Maç: " + yfinal + " - " + final, canvas.width / 2 - 180, canvas.height / 2);
+					alert("{% trans 'Next match: ' %}" + yfinal + " - " + final);
+					context.fillText("Next match: " + yfinal + " - " + final, canvas.width / 2 - 180, canvas.height / 2);
 					setTimeout(function() {
 						document.getElementById("final-button").style.display = "block";
 					}, 2000);
 				}, 3000);
 			}else{
-				context.fillText("Kazanan: " + kazanan, canvas.width / 2 - 100, canvas.height / 2);
+				context.fillText("{% trans 'Winner: ' %}" + kazanan, canvas.width / 2 - 100, canvas.height / 2);
 				setTimeout(function() {
 					window.location.href = '{% url "pong:home" %}';
 				}, 3000);

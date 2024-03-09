@@ -1,0 +1,40 @@
+{% extends 'html/tbase.html' %}
+{% load i18n %}
+{% block title %}Tic Tac Toe{% endblock %}
+
+{% block content %}
+<div class="container mt-3 pt-5">
+    <h2 class="text-center">{% trans 'PLAY' %} TIC TAC TOE</h2>
+    <h3 class="text-center">{% trans 'Hello' %}, {{ user }}</h3>
+</div>
+<div class="full-page" id="full-page">
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="game" id="game-container" style="display: none;">
+                    <div class="scoreboard">
+                        <div id="player" class="text-black"></div>
+                    </div>
+					<div class="boardcontainer">
+						<div class="board">
+							<div data-cell-index="0" class="space text-black"></div>
+							<div data-cell-index="1" class="space text-black"></div>
+							<div data-cell-index="2" class="space text-black"></div>
+
+							<div data-cell-index="3" class="space text-black"></div>
+							<div data-cell-index="4" class="space text-black"></div>
+							<div data-cell-index="5" class="space text-black"></div>
+
+							<div data-cell-index="6" class="space text-black"></div>
+							<div data-cell-index="7" class="space text-black"></div>
+							<div data-cell-index="8" class="space text-black"></div>
+							</div>
+						</div>
+                </div>
+				<div id="containers"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'js/play.html' %}
+{% endblock %}

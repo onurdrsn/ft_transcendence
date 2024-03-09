@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Pong Home" %}{% endblock %}
+{% block content %}
+    <div class="container mt-5 pt-5">
+        <h2 class="text-center">Ping Pong</h2>
+        <h3 class="text-center"> {% trans 'Hello' %}, {{ request.user.username }}</h3>
+        {% if messages %}
+            {% for messages in messages %}
+                <div class="alert alert-dark">
+                    {{ messages }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form id="formSubmit" method="post" action="{% url 'pong:home' %}">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="col-12">
+                        <label class="form-label">{% trans 'Room Name' %}
+                            <input type="hidden" id="option" name="option" value='1'>
+                            <input type="text" id="oda_ismi" name="oda_ismi" title="{% trans 'Enter the name of the room to create' %}" placeholder="{% trans 'Enter the name of the room to create' %}" class="form-control">
+                        </label>
+                        <button type="submit" id="submitStart" class="btn btn-outline-danger">{% trans 'Start the Game' %}</button>
+
+                    </div>
+                    <div class="col-12">
+                        <br>
+                        <a href="{% url 'pong:history' %}" id="submitHistory" class="btn btn-outline-secondary">{% trans 'Game History Table' %}</a>
+                        <a href="{% url 'pong:tournament' %}" id="submitTurnuva" class="btn btn-outline-primary">{% trans 'Play Tournaments' %}</a>
+                        <a href="{% url 'pong:ai' %}" id="submitAi" class="btn btn-outline-primary">{% trans 'Play with Ai' %}</a>
+                        <a href="{% url 'pong:offline' %}" id="submitAi" class="btn btn-outline-primary">{% trans 'Play with Offline' %}</a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped my-4" id="rooms-table">
+                <thead>
+                    <tr>
+                        <th>{% trans 'Room Name' %}</th>
+                        <th>{% trans 'Creator' %}</th>
+                        <th>{% trans 'Is Over' %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    {% include 'js/game_home.html' %}
+{% endblock %}

@@ -44,12 +44,23 @@ class GameConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-    def receive(self, text_data=None, bytes_data=None):
+    def receive(self, text_data, bytes_data=None):
         """
         :param text_data: json data
         :param bytes_data: bytes data
         :return: None
         """
+        data = json.loads(text_data)
+        if data == 'update':
+            player = data['payload']
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_name,
+                {
+                    'type': 'update',
+                    'payload': player
+                }
+            )
+
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
@@ -70,6 +81,16 @@ class GameConsumer(WebsocketConsumer):
                 'payload': text_data
             }
         )
+
+    async def update(self, event):
+        if event['payload']:
+            self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'update',
+                    'payload': event['payload']
+                }
+            )
 
     def run_game(self, event):
         """

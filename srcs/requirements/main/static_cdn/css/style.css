@@ -1,25 +1,36 @@
 :root {
-  --main-background-color: #f2f2f2;
-  --dark-background-color: #a2a2a2;
-  --secondary-text-color: #808080;
-  --light-primary-text-color: #0080ff;
-  --a-visited-color: #a5630d;
-  --bg-color: rgb(35, 35, 35);
+  --main-background-color: rgb(242, 242, 242);
+  --dark-background-color: rgb(21, 23, 24);
+  --secondary-text-color: rgb(128, 128, 128);
+  --light-primary-text-color: rgb(0, 128, 255);
+  --a-visited-color: rgb(205, 126, 31);
+  --bg-color: rgb(26, 29, 30);
   --text-color: rgb(183, 183, 183);
   --a-color: rgb(27, 109, 168);
-  --a-hover-color: #acc;
-  --input-border-color: rgba(211, 211, 211, 0.2);
+  --a-hover-color: rgb(170, 240, 240);
+  --input-border-color: rgba(211, 211, 211);
   --input-placeholder-color: rgb(103, 103, 103);
-  --dialog-bg-color: rgba(36, 36, 36, 0.95);
+  --dialog-bg-color: rgb(21, 23, 24);
   --bg-image: linear-gradient(rgb(15, 15, 15), rgb(15, 15, 15));
-  --header-color: #00b786;
+  --header-color: rgb(76, 255, 207);
+  --bs-white: #CCCACAFF;
 }
 
-* a:visited, * a.fl:visited, a:visited, a:visited * {
-    color: var(--a-visited-color) !important;
+[data-bs-theme="dark"] {
+  --bs-body-bg: var(--dark-background-color);
+  --text-color: var(--text-color);
 }
 
-html,body {
+[data-bs-theme="white"] {
+  --bs-body-bg: var(--bs-white);
+  --text-color: var(--dialog-bg-color);
+}
+
+:not(svg) {
+    transform-origin: 0 0;
+}
+
+html,body, footer {
   height:100%;
   min-height:100%;
   max-height:100%;
@@ -30,12 +41,20 @@ html,body {
 }
 
 .password-container input {
-  padding-right: 30px;
   flex: 1;
 }
 
-* :not(input) :not(textarea) *[class*="span"]{
-  font-family: 'Indie Flower', 'Comic Sans', cursive;
+.password-container input::-ms-reveal {
+  display: none;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -120,14 +139,6 @@ html,body {
   display: block !important;
 }
 
-@font-face {
-  font-family: 'Indie Flower';
-  font-style: normal;
-  font-weight: 400;
-  src: url("../font/indie.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 .cancel-icon::before, .accept-icon::before, #home-icon::before, #room-icon::before, #login-icon::before, #logout-icon::before {
   cursor: pointer;
   content: "";
@@ -146,10 +157,9 @@ h2 {
 }
 
 h3 {
-  font-size: 1.8rem;
   text-decoration-style: dashed;
   padding: 0;
-  margin: 10px 0 2px 0;
+  margin: 10px 0 0 10px;
 }
 
 .full-page {
@@ -206,7 +216,7 @@ h3 {
 }
 
 .space {
-  background-color: #ccc;
+  background-color: #6e6d6d73;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -254,7 +264,7 @@ flex: auto;
 }
 
 head, footer, body {
-  font-family: "FiraCode Nerd Font";
+  font-family: 'Segoe UI', sans-serif;
   font-weight: 380;
 }
 
@@ -294,14 +304,10 @@ head, footer, body {
 
 .form-signin input[type="email"] {
   margin-bottom: 10px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .form-signin input[type="text"] {
   margin-bottom: 10px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .form-signin input[type="password"] {

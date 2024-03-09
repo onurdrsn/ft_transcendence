@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Ping Pong{% endblock %}
+{% load i18n %}
+
+{% block content %}
+    <header class="container-fluid p-0 position-relative">
+        <div class="bg-dark text-white text-center py-3">
+            <h1 class="m-0">Ping Pong</h1>
+        </div>
+    </header>
+
+    <div class="container p-4">
+        <canvas id="pong" class="bg-dark d-block mx-auto border border-3 border-dark" width="800" height="500"></canvas>
+    </div>
+
+    <!-- Button Container -->
+    <div class="d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#difficultyModal">{% trans 'Difficulty Settings' %}</button>
+        <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#colorModal">{% trans 'Color Settings' %}</button>
+        <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#speedModal">{% trans 'Ball Speed Settings' %}</button>
+    </div>
+
+    <!-- AI Difficulty Modals -->
+    <div class="modal fade" id="difficultyModal" tabindex="-1"
+    aria-labelledby="difficultyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="difficultyModalLabel">
+                        {% trans 'Difficulty Level' %}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>{% trans 'Difficulty Level' %}</h6>
+                    <button onclick="setDifficulty('easy')" class="btn btn-success">{% trans 'Easy' %}</button>
+					<button onclick="setDifficulty('medium')" class="btn btn-success">{% trans 'Medium' %}</button>
+					<button onclick="setDifficulty('hard')" class="btn btn-success">{% trans 'Hard' %}</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Color Change Modals -->
+    <div class="modal fade" id="colorModal" tabindex="-1"
+    aria-labelledby="colorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="colorModalLabel">
+                        {% trans 'Color Settings' %}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>{% trans 'Player Color' %}</h6>
+                    <input type="color" id="playerColorPicker" class="form-control" value="#ffffff">
+                    <h6>{% trans 'AI Color' %}</h6>
+                    <input type="color" id="aiColorPicker" class="form-control" value="#ffffff">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="applyColor()">{% trans 'Apply' %}</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ball Speed Modals -->
+    <div class="modal fade" id="speedModal" tabindex="-1"
+    aria-labelledby="speedModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="speedModalLabel">
+                        {% trans 'Ball Speed Settings' %}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>{% trans 'Ball Speed' %}</h6>
+                    <input type="range" id="ballSpeedSlider" min="1" max="20" value="5" class="form-range">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'js/ai.html' %}
+{% endblock %}

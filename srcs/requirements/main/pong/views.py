@@ -16,7 +16,7 @@ def home(request):
         option = request.POST.getlist('option')[0]
         room_name = request.POST.getlist('oda_ismi')[0]
         if room_name is None:
-            messages.error(request, _("oda bilgisi alınamadı oda adı {}").format(room_name))
+            messages.error(request, _("room information not available room name {}").format(room_name))
             time.sleep(2)
             return redirect("pong:home")
         if option == '1':
@@ -27,14 +27,14 @@ def home(request):
                 return redirect('/pong/' + room_name)
 
             if game.player_count() >= 2:
-                messages.success(request, _("The room is already full or finish"))
+                messages.error(request, _("The room is already full or finish"))
                 time.sleep(2)
                 return redirect("pong:home")
 
         if option == '2':
             game = get_object_or_404(Room, room_name=room_name)
             if game is None:
-                messages.success(request, _("The room does not exist"))
+                messages.error(request, _("The room does not exist"))
                 time.sleep(2)
                 return redirect("pong:home")
             if game.game_creator == user:
@@ -42,20 +42,20 @@ def home(request):
             elif game.game_opponent == user and game.game_creator != user:
                 return redirect('/pong/' + room_name)
             if game.player_count() >= 2:
-                messages.success(request, _("The room is already full or finish"))
+                messages.error(request, _("The room is already full or finish"))
                 time.sleep(2)
                 return redirect("pong:home")
             game.game_opponent = user
             game.save()
             return redirect('/pong/' + room_name)
-    return render(request, 'anasayfa.html', {'rooms': rooms})
+    return render(request, 'html/game_home.html', {'rooms': rooms})
 
 
 @login_required
 def room(request, room_name):
     game = get_object_or_404(Room, room_name=room_name)
 
-    return render(request, "oda.html", {
+    return render(request, "html/oda.html", {
         'room_name': room_name,
         'user': lambda: request.user.username if request.user.username == game.game_creator else game.game_opponent,
         'creator': game.game_creator,
@@ -67,7 +67,7 @@ def room(request, room_name):
 
 @login_required
 def game_history(request):
-    return render(request, "history.html", {'game_history': Room.objects.all()})
+    return render(request, "html/history.html", {'game_history': Room.objects.all()})
 
 
 @login_required
@@ -102,4 +102,12 @@ def fetch_rooms(request):
 
 
 def tournament(request):
-    return render(request, 'turnuva.html')
+    return render(request, 'html/turnuva.html')
+
+
+def ai(request):
+    return render(request, 'html/ai.html')
+
+
+def offline(request):
+    return render(request, 'html/offline.html')

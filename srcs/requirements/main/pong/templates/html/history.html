@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}{% trans "Game History" %}{% endblock %}
+
+{% block content %}
+	<link rel="stylesheet" href="{% static 'pong/css/oda.css' %}">
+<div class="container mt-5 table-responsive">
+    <h2 class="mb-4">{% trans 'Game History' %}</h2>
+    <a href="{% url 'pong:home' %}" class="btn btn-danger">{% trans 'Game Home' %}</a>
+    <hr>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">{% trans 'Player 1' %}</th>
+            <th scope="col">{% trans 'Player 2' %}</th>
+            <th scope="col">{% trans 'Winner' %}</th>
+            <th scope="col">{% trans 'Room Name' %}</th>
+            <th scope="col">{% trans 'Game State' %}</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for game in game_history %}
+                <tr>
+                    <td>{{ game.game_creator }}</td>
+                    <td>
+                        {% if game.game_opponent == None %}
+                            {% trans 'Waiting for Player' %}
+                        {% else %}
+                            {{ game.game_opponent }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if game.winner == None %}
+                            {% if game.game_opponent == None %}
+                                {% trans 'Waiting for Player' %}
+                            {% else %}
+                                {% trans 'Continues' %}
+                            {% endif %}
+                        {% else %}
+                            {{ game.winner }}
+                        {% endif %}
+                    </td>
+                    <td>{{ game.room_name }}</td>
+                    <td>{% if  game.is_over  == 1 %}
+                            {% trans 'Over' %}
+                        {% else %}
+                            {% trans 'Continues' %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

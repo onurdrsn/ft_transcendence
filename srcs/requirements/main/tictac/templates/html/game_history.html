@@ -1,0 +1,31 @@
+{% extends 'html/tbase.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Game History' %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5 table-responsive">
+    <h2 class="mb-4">{% trans 'Game History' %}</h2>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">{% trans 'Player 1' %}</th>
+            <th scope="col">{% trans 'Player 2' %}</th>
+            <th scope="col">{% trans 'Winner' %}</th>
+            <th scope="col">{% trans 'Room code' %}</th>
+            <th scope="col">{% trans 'Date Played' %}</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for game in game_history %}
+                <tr>
+                    <td>{{ game.game_creator }}</td>
+                    <td>{{ game.game_opponent }}</td>
+                    <td>{{ game.winner }}</td>
+                    <td>{{ game.room_code }}</td>
+                    <td>{{ game.dated }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

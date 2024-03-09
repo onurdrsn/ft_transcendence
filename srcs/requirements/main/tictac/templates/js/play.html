@@ -1,5 +1,4 @@
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+{% load i18n %}
 <script>
 const	room_code = '{{ room_code }}'
 const socket = new WebSocket(
@@ -7,7 +6,7 @@ const socket = new WebSocket(
 		
 const	username = '{{ user }}'
 const	creator = '{{ creator }}'
-const	opponent = '{{ opponent }}'
+var     opponent = '{{ opponent }}'
 
 let	tmp1 = creator
 
@@ -17,14 +16,12 @@ let	player = creator === username ? creator : opponent
 let current = creator === username ? 'X' : 'O'
 
 element.forEach(function(el) {
-	el.addEventListener('click', function(e) {
-		if (e instanceof MouseEvent) {
-			if (tmp1 === username) {
-				setText(e.currentTarget.getAttribute('data-cell-index'), current)
-			}
-		}
-	})
-})
+    el.addEventListener('click', function(e) {
+        if (e instanceof MouseEvent && tmp1 === username) {
+            setText(e.currentTarget.getAttribute('data-cell-index'), current);
+        }
+    });
+});
 
 function isGameEnd() {
 	let	count = 0
@@ -42,9 +39,7 @@ function isGameEnd() {
 		socket.send(JSON.stringify({
 			data
 		}))
-		swal("Good over!", "Game end no one won", "warning").then(() => {
-			window.location.href = '{% url 'tictac:game_history' %}'
-		})
+        window.location.href = '{% url 'tictac:game_history' %}';
 	}
 }
 
@@ -79,9 +74,8 @@ function isGameWon(value, player) {
 		socket.send(JSON.stringify({
 			data
 		}))
-		swal("Good job!", "You won", "success").then(() => {
-			window.location.href = '{% url 'tictac:game_history' %}'
-		})
+        alert("{% trans 'Good job! You won.' %}");
+        window.location.href = '{% url 'tictac:game_history' %}';
 	}
 	isGameEnd()
 
@@ -110,81 +104,86 @@ function	setAnotherUserText(index, value){
 	element[parseInt(index)].innerHTML = value
 }
 
-if (document.querySelector('#button-submit')) {
 
-	document.querySelector('#button-submit').onclick = function (e) {
-		if (creator && opponent) {
-			const gameContainer = document.getElementById('game-container').style;
-			const control = document.getElementById('button-submit').style;
-			const containers = document.getElementById('containers').style;
-        	if (gameContainer.display === 'none') {
-        	    gameContainer.display = 'block';
-        	    if (control) control.display = 'none';
-        	    if (containers) containers.display = 'none';
-        	} else {
-        	    document.querySelector('#containers').innerHTML += ('<div class="alert alert-danger">PLS OTHER USER WAIT</div>');
-        	}
-    	}
-    	return false;
+socket.onopen = function() {
+	if (creator) {
+		const gameContainer = document.getElementById('game-container').style;
+		const containers = document.getElementById('containers').style;
+		if (gameContainer.display === 'none') {
+			gameContainer.display = 'block';
+			if (containers)
+                containers.display = 'none';
+		}
 	}
-}
-
-socket.onopen = function(e) {
-	console.log('Socket connected')
 }
 
 socket.onmessage = function(e) {
-	e.preventDefault();
-	const	data = JSON.parse(e.data);
+    e.preventDefault();
+    const data = JSON.parse(e.data);
 
-	document.querySelector('#button-submit').onclick();
-	if (tmp1 === creator) {
-		tmp1 = opponent
-	} else if (tmp1 === opponent) {
-		tmp1 = creator
-	}
-	if (data.payload.type === 'end' && data.payload.user !== username) {
-		sendWinnerToServer(data.payload.user)
-		swal("Sorry!", "You lost", "error").then(() => {
-			window.location.href = '{% url 'tictac:game_history' %}';
-		});
-	} else if (data.payload.type === 'over') {
-		sendWinnerToServer('Over')
-		swal("Game over!", "Game end no one won", "warning").then(() => {
-			window.location.href = '{% url 'tictac:game_history' %}';
-		});
-	} else if (data.payload.type === 'running' && data.payload.user !== username) {
-		setAnotherUserText(data.payload.index, data.payload.player);
-	}
+    console.log(data.payload.user)
+    if (data.payload.type === 'end' && data.payload.user !== username) {
+        sendWinnerToServer(data.payload.user);
+        alert("{% trans 'Sorry! You lost' %}");
+        window.location.href = '{% url 'tictac:game_history' %}';
+    } else if (data.payload.type === 'over') {
+        sendWinnerToServer('{% trans "Over" %}');
+        alert("{% trans 'Game over! No one won.' %}");
+        window.location.href = '{% url 'tictac:game_history' %}';
+    } else if (data.payload.type === 'running' && data.payload.user !== username) {
+        setAnotherUserText(data.payload.index, data.payload.player);
+        tmp1 = tmp1 === creator ? opponent : creator;
+        const turn = document.getElementById('player');
+        if (turn) {
+            if (tmp1 === username) {
+                turn.innerHTML = `{% trans 'It is your turn' %}`;
+            } else {
+                turn.innerHTML = `{% trans 'Now' %} ${tmp1}`;
+            }
+        }
+    }
+
+    if (data.payload.type === 'running' && data.payload.user === username) {
+        tmp1 = tmp1 === creator ? opponent : creator;
+        const turn = document.getElementById('player');
+        if (turn) {
+            if (tmp1 === username) {
+                turn.innerHTML = `{% trans 'It is your turn' %}`;
+            } else {
+                turn.innerHTML = `{% trans 'Now' %} ${tmp1}`;
+            }
+        }
+    }
 }
 
+
 socket.onclose = function (e){
-	console.log('Socket closed')
+	//onclose
 }
 
 
 async function sendWinnerToServer(winner) {
 	if (winner) {
-    	const url = "{% url 'tictac:update_winner' room_code=room_code %}"
+		const url = "{% url 'tictac:update_winner' room_code=room_code %}"
 		await fetch(`${url}`, {
-    	    method: 'POST',
-    	    headers: {
-    	        'Content-Type': 'application/json',
-    	        'X-CSRFToken': '{{ csrf_token }}',
-    	    },
-    	    body: JSON.stringify({
-    	        'winner': winner,
-    	    }),
-    	})
-    	.then(response => response.json())
-    	.then(data => {
-    	    if (data.success) {
-    	        console.log('Winner updated successfully.');
-    	    } else {
-    	        console.error('Failed to update winner:', data.error);
-    	    }
-    	})
-    	.catch(error => console.error('Error updating winner:', error));
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': '{{ csrf_token }}',
+			},
+			body: JSON.stringify({
+				'winner': winner,
+			}),
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				//updated
+			} else {
+				console.error('Failed to update winner:', data.error);
+			}
+		})
+		.catch(error => console.error('Error updating winner:', error));
 	}
 }
 </script>

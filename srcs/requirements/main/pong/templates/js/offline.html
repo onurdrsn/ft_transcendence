@@ -1,0 +1,198 @@
+<script>
+    const canvas = document.getElementById("pong");
+    const context = canvas.getContext("2d");
+    // Paddle properties
+    const paddleWidth = 10;
+    const paddleHeight = 100;
+    let player1Y = canvas.height / 2 - paddleHeight / 2;
+    let player2Y = canvas.height / 2 - paddleHeight / 2;
+    // Paddle properties
+    let paddleColor1 = "#fff";
+    let paddleColor2 = "#fff";
+    // Ball properties
+    let ballX = canvas.width / 2;
+    let ballY = canvas.height / 2;
+    const ballRadius = 10;
+    let ballSpeedX = 2;
+    let ballSpeedY = 2;
+    let ballColor = "#fff";
+
+    // Player scores
+    let player1Score = 0;
+    let player2Score = 0;
+    const winningScore = 11;
+    // Game state
+    let gameStarted = false;
+    let gameOver = false;
+    // Keyboard input
+    let wPressed = false;
+    let sPressed = false;
+    let upArrowPressed = false;
+    let downArrowPressed = false;
+
+    // Event listeners for keyboard input
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    // Keyboard input handlers
+    function handleKeyDown(event) {
+        if (event.key === "w") {
+            wPressed = true;
+        }
+        if (event.key === "s") {
+            sPressed = true;
+        }
+        if (event.key === "ArrowUp") {
+            upArrowPressed = true;
+        }
+        if (event.key === "ArrowDown") {
+            downArrowPressed = true;
+        }
+    }
+
+    function handleKeyUp(event) {
+        if (event.key === "w") {
+            wPressed = false;
+        }
+        if (event.key === "s") {
+            sPressed = false;
+        }
+        if (event.key === "ArrowUp") {
+            upArrowPressed = false;
+        }
+        if (event.key === "ArrowDown") {
+            downArrowPressed = false;
+        }
+    }
+
+    // Game loop
+    function gameLoop() {
+        render();
+    }
+
+    function render() {
+        context.fillStyle = "#222";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "#fff";
+        context.fillRect(canvas.width / 2 - 2, 0, 4, canvas.height);
+        // Draw paddles
+        context.fillStyle = paddleColor1;
+        context.fillRect(10, player1Y, paddleWidth, paddleHeight);
+        context.fillStyle = paddleColor2;
+        context.fillRect(canvas.width - paddleWidth - 10, player2Y, paddleWidth, paddleHeight);
+        // Draw ball
+        context.fillStyle = ballColor;
+        context.beginPath();
+        context.arc(ballX, ballY, ballRadius, 0, Math.PI * 2, false);
+        context.closePath();
+        context.fill();
+
+        // Check for collision with paddles
+        if (ballX - ballRadius < paddleWidth && ballY > player1Y && ballY < player1Y + paddleHeight) {
+            ballSpeedX = -ballSpeedX;
+        } else if (ballX + ballRadius > canvas.width - paddleWidth && ballY > player2Y && ballY < player2Y + paddleHeight) {
+            ballSpeedX = -ballSpeedX;
+        }
+
+        // Update ball position
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        // Check for collision with walls
+        if (ballY - ballRadius < 0 || ballY + ballRadius > canvas.height) {
+            ballSpeedY = -ballSpeedY;
+        }
+
+        // Check for point scored
+        if (ballX - ballRadius < 0) {
+            player2Score++;
+            resetBall();
+        } else if (ballX + ballRadius > canvas.width) {
+            player1Score++;
+            resetBall();
+        }
+
+        document.getElementById("player1-score").textContent = player1Score;
+        document.getElementById("player2-score").textContent = player2Score;
+
+        // Check for game over
+        if (player1Score === winningScore || player2Score === winningScore) {
+            gameOver = true;
+        }
+
+        // Move paddles
+        if (wPressed && player1Y > 0) {
+            player1Y -= 5;
+        }
+        if (sPressed && player1Y < canvas.height - paddleHeight) {
+            player1Y += 5;
+        }
+        if (upArrowPressed && player2Y > 0) {
+            player2Y -= 5;
+        }
+        if (downArrowPressed && player2Y < canvas.height - paddleHeight) {
+            player2Y += 5;
+        }
+        // Restart game if game over
+        if (gameOver) {
+            document.getElementById("other").style.display =
+                document.getElementById("other").style.display === 'block' ? 'none' : 'block';
+            document.getElementById("restart-button").style.display =
+                document.getElementById("restart-button").style.display === 'block' ? 'none' : "block";
+        } else {
+            requestAnimationFrame(gameLoop);
+        }
+    }
+
+    // Reset ball position and speed
+    function resetBall() {
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+        ballSpeedX = -ballSpeedX;
+        ballSpeedY = 3;
+    }
+
+    // Restart the game
+    function restartGame() {
+        player1Score = 0;
+        player2Score = 0;
+        gameOver = false;
+        document.getElementById("restart-button").style.display =
+            document.getElementById("restart-button").style.display === 'block' ? 'none' : "block";
+        document.getElementById("other").style.display =
+            document.getElementById("other").style.display === 'block' ? 'none' : "block";
+        requestAnimationFrame(gameLoop);
+    }
+
+    function toggleSettingsModal() {
+        const modal = document.getElementById('settingsModal');
+        const modalBackdrop = document.querySelector('.modal-backdrop');
+
+        if (modal.classList.contains('show')) {
+            modal.classList.remove('show');
+            modalBackdrop.remove();
+        } else {
+            modal.classList.add('show');
+            document.body.classList.add('modal-open');
+            document.body.appendChild(modalBackdrop);
+        }
+    }
+
+    function ballSpeed() {
+        const ballSpeed = document.getElementById('ballSpeed').value;
+        ballSpeedX = ballSpeed;
+        ballSpeedY = ballSpeed;
+    }
+
+    function applySettings() {
+        paddleColor1 = document.getElementById('changePaddleColor1').value;
+        paddleColor2 = document.getElementById('changePaddleColor2').value;
+        ballColor = document.getElementById('changeBallColor').value;
+        ballSpeed();
+        // Close the modal after applying settings
+       toggleSettingsModal();
+    }
+
+    // Start the game loop
+    requestAnimationFrame(gameLoop);
+	</script>

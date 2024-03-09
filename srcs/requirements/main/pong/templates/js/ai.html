@@ -1,0 +1,296 @@
+{% load i18n %}
+<script>
+    // Select the canvas element
+    const canvas = document.getElementById('pong');
+    const context = canvas.getContext('2d');
+
+    // Playground sizes
+    const fieldWidth = canvas.width;
+    const fieldHeight = canvas.height;
+
+
+    // Player and AI racket
+    const paddleWidth = 10;
+    const paddleHeight = 100;
+    const paddleSpeed = 10;
+
+    // Player racket
+    const player = {
+        x: 10,
+        y: fieldHeight / 2 - paddleHeight / 2,
+        width: paddleWidth,
+        height: paddleHeight,
+        color: "#FF5733",
+        dy: 0,
+    };
+
+    // AI racket
+    const ai = {
+        x: fieldWidth - paddleWidth - 10,
+        y: fieldHeight / 2 - paddleHeight / 2,
+        width: paddleWidth,
+        height: paddleHeight,
+        color: "#33FFA8",
+        dy: paddleSpeed,
+    };
+
+    // Ball
+    const ball = {
+        x: fieldWidth / 2,
+        y: fieldHeight / 2,
+        radius: 10,
+        speed: 5,
+        dx: 5,
+        dy: 5,
+        color: "#fff",
+    };
+
+    // Kaydırıcı değerini dinleyen olay dinleyicisi
+    const ballSpeedSlider = document.getElementById('ballSpeedSlider');
+    ballSpeedSlider.addEventListener('input', function() {
+        const newSpeed = parseInt(this.value);
+        updateBallSpeed(newSpeed);
+    });
+
+    // Topun hızını güncelleme fonksiyonu
+    function updateBallSpeed(newSpeed) {
+        ball.speed = newSpeed;
+        updateBallDirection();
+    }
+
+    // Topun yönünü güncelleme fonksiyonu
+    function updateBallDirection() {
+      const speedFactor = ball.speed / Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy);
+      ball.dx *= speedFactor;
+      ball.dy *= speedFactor;
+    }
+
+    // Scores
+    let playerScore = 0;
+    let aiScore = 0;
+    // Check if the game is over
+    let gameOver = false;
+
+    // Player and AI scores update
+    function updateScore() {
+        if (playerScore >= 11 || aiScore >= 11) {
+            gameOver = true;
+        }
+    }
+
+    // Play again
+    function playAgain() {
+        playerScore = 0;
+        aiScore = 0;
+        gameOver = false;
+    }
+
+    // Game difficulty level
+    let difficulty = "medium";
+
+    // Clear the playground
+    function clearField() {
+        context.fillStyle = "#000";
+        context.fillRect(0, 0, fieldWidth, fieldHeight);
+    }
+
+    // Draw player and AI rackets
+    function drawPaddles() {
+        context.fillStyle = player.color;
+        context.fillRect(player.x, player.y, player.width, player.height);
+        context.fillStyle = ai.color;
+        context.fillRect(ai.x, ai.y, ai.width, ai.height);
+    }
+
+    // Draw the field lines
+    function drawNet() {
+        context.fillStyle = "#fff";
+        for (let i = 0; i <= canvas.height; i += 15) {
+            context.fillRect(canvas.width / 2 - 1, i, 2, 10);
+        }
+    }
+
+    // Draw the ball
+    function drawBall() {
+        context.fillStyle = ball.color;
+        context.beginPath();
+        context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2, false);
+        context.closePath();
+        context.fill();
+    }
+
+
+    // Draw the scores
+    function drawScores() {
+        context.fillStyle = "#fff";
+        context.font = "30px Arial";
+        context.fillText(playerScore, fieldWidth / 4, 50);
+        context.fillText(aiScore, (3 * fieldWidth) / 4, 50);
+        if (playerScore === 11) {
+            context.fillText("{% trans 'You Won!' %}", fieldWidth / 2 - 80, 100);
+            updateScore();
+        } else if (aiScore === 11) {
+            context.fillText("{% trans 'You Lost!' %}", fieldWidth / 2 - 80, 100);
+            updateScore();
+        }
+    }
+
+    // Player racket movement
+    function movePlayerPaddle() {
+        player.y += player.dy;
+        if (player.y < 0) {
+            player.y = 0;
+        } else if (player.y + player.height > fieldHeight) {
+            player.y = fieldHeight - player.height;
+        }
+    }
+
+    // AI racket movement
+    function moveAiPaddle() {
+        const aiCenter = ai.y + ai.height / 2;
+        const ballCenter = ball.y;
+
+        if (difficulty === "easy") {
+            // Easy difficulty level: AI paddle moves slowly
+            ai.dy = paddleSpeed * 0.09;
+        } else if (difficulty === "medium") {
+            // Medium difficulty level: AI paddle moves at medium speed
+            ai.dy = paddleSpeed * 0.2;
+        } else if (difficulty === "hard") {
+            // Hard difficulty level: AI racket moves fast
+            ai.dy = paddleSpeed * 2;
+        }
+
+        // AI racket moving in the direction of the ball
+        if (aiCenter < ballCenter - 35) {
+            ai.y += ai.dy;
+        } else if (aiCenter > ballCenter + 35) {
+            ai.y -= ai.dy;
+        }
+
+        // AI racket does not leave the player area
+        if (ai.y < 0) {
+            ai.y = 0;
+        } else if (ai.y + ai.height > fieldHeight) {
+            ai.y = fieldHeight - ai.height;
+        }
+    }
+
+    // Ball movement
+    function moveBall() {
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        // Wall impact control
+        if (ball.y + ball.radius > fieldHeight || ball.y - ball.radius < 0) {
+        	ball.dy *= -1;
+        }
+
+        // Player and AI paddle collision control
+        if (
+            ball.x - ball.radius < player.x + player.width &&
+            ball.y + ball.radius > player.y &&
+            ball.y - ball.radius < player.y + player.height
+        ) {
+            ball.dx *= -1;
+        } else if (
+            ball.x + ball.radius > ai.x &&
+            ball.y + ball.radius > ai.y &&
+            ball.y - ball.radius < ai.y + ai.height
+        ) {
+            ball.dx *= -1;
+        }
+
+        // Score check
+        if (ball.x - ball.radius < 0) {
+            aiScore++;
+            resetBall();
+        } else if (ball.x + ball.radius > fieldWidth) {
+            playerScore++;
+            resetBall();
+        }
+    }
+
+    // Bring the ball to the center
+    function resetBall() {
+        ball.x = fieldWidth / 2;
+        ball.y = fieldHeight / 2;
+        ball.speed = 5;
+        ball.dx *= -1;
+        ball.dy *= Math.random() < 0.5 ? -1 : 1;
+    }
+
+    // Game Loop
+    function gameLoop() {
+        if (gameOver)
+            setTimeout(function() {
+                window.location.href = '{% url "pong:home" %}';
+			}, 1000);
+        else {
+            clearField();
+            drawPaddles();
+            drawBall();
+            drawScores();
+            movePlayerPaddle();
+            drawNet();
+            moveAiPaddle();
+            moveBall();
+            requestAnimationFrame(gameLoop);
+        }
+    }
+
+    // Start the Game
+    function startGame() {
+        playerScore = 0;
+        aiScore = 0;
+        resetBall();
+        gameLoop();
+    }
+
+    // Adjust difficulty level
+    function setDifficulty(level) {
+        difficulty = level;
+    }
+
+    // Control the movement of the player paddle
+    document.addEventListener("keydown", function (event) {
+        if (event.code === "ArrowUp") {
+            player.dy = -paddleSpeed;
+        } else if (event.code === "ArrowDown") {
+            player.dy = paddleSpeed;
+        }
+    });
+
+    document.addEventListener("keyup", function (event) {
+        if (event.code === "ArrowUp" || event.code === "ArrowDown") {
+            player.dy = 0;
+        }
+    });
+
+    function toggleSettingsModal() {
+        const modal = document.getElementById('settingsModal');
+        const modalBackdrop = document.querySelector('.modal-backdrop');
+
+        if (modal.classList.contains('show')) {
+            modal.classList.remove('show');
+            modalBackdrop.remove();
+        } else {
+            modal.classList.add('show');
+            document.body.classList.add('modal-open');
+            document.body.appendChild(modalBackdrop);
+        }
+    }
+
+    function applyColor() {
+        const playerColor = document.getElementById('playerColorPicker').value;
+        const aiColor = document.getElementById('aiColorPicker').value;
+
+        player.color = playerColor;
+        ai.color = aiColor;
+        // Close the modal after applying settings
+        toggleSettingsModal();
+    }
+
+    // Start the Game
+    startGame();
+</script>

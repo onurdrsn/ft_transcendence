@@ -1,0 +1,58 @@
+{% extends 'html/tbase.html' %}
+{% load i18n %}
+{% block title %}Tic Tac Toe{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 pt-5">
+        <h2 class="text-center">{% trans 'PLAY' %} TIC TAC TOE</h2>
+		<h3 class="text-center">{% trans 'Hello' %}, {{ request.user.username }}</h3>
+		<div class="col-md-6 mx-auto mt-4">
+			{% if messages %}
+				{% for messages in messages %}
+					<div class="alert alert-dark">
+						{{ messages }}
+					</div>
+				{% endfor %}
+			{% endif %}
+            <form method="post" action="{% url 'tictac:tictac_create' %}">{% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label>{% trans 'Choose Option' %}</label>
+                        <select class="form-control" name="option">
+                            <option value="1">{% trans 'Create Room Code' %}</option>
+                            <option value="2">{% trans 'Have Room Code' %}</option>
+                        </select>
+                        <div class="col-md-12 form-group">
+                            <label>{% trans 'Enter Room Code' %}</label>
+                            <input type="text" name="room_code" placeholder="{% trans 'Type room code' %}" class="form-control">
+                        </div>
+                        <button type="submit" class="my-2 btn btn-light">{% trans 'Start Game' %}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Client Error MODAL -->
+        <!-- Button trigger modal -->
+        <button type="button" id="id_trigger_client_error_modal" class="d-none btn btn-primary" data-bs-toggle="modal" data-bs-target="#id_client_error_modal"></button>
+        <!-- Modal -->
+        <div class="modal fade" id="id_client_error_modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Socket Client Error' %}</h5>
+                            <button type="button" class="btn btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p id="id_client_error_modal_body">{% trans 'Something went wrong.' %}</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="id_client_error_modal_close_btn">{% trans 'Close' %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Client Error MODAL -->
+	</div>
+{% endblock %}

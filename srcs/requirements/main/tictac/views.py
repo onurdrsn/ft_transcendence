@@ -16,29 +16,25 @@ def tictac(request):
         option = request.POST.get('option')
         room_code = request.POST.get('room_code')
         if room_code is None:
-            messages.error(request, _("oda bilgisi alınamadı oda adı {}").format(room_code))
+            messages.error(request, _("room information not available room name {}").format(room_code))
             time.sleep(2)
             return redirect("/tictac")
         if option == '1':
             game = TicTacToe.objects.filter(room_code=room_code).first()
             if game is None:
-                messages.error(request, _("Room code not found"))
-                time.sleep(2)
-                return HttpResponseRedirect('/tictac')
+                game = TicTacToe(game_creator=user, room_code=room_code)
+                game.save()
+                return redirect('/tictac/' + room_code)
 
             if game.player_count() >= 2:
                 messages.error(request, _("The room is already full"))
                 time.sleep(2)
                 return HttpResponseRedirect('/tictac')
 
-            game.game_opponent = user
-            game.save()
-            return redirect('/tictac/' + room_code)
-
         elif option == '2':
             game = get_object_or_404(TicTacToe, room_code=room_code)
             if game is None:
-                messages.success(request, _("The room does not exist"))
+                messages.error(request, _("The room does not exist"))
                 time.sleep(2)
                 return redirect("/tictac")
             if game.game_creator == user:
@@ -46,20 +42,20 @@ def tictac(request):
             elif game.game_opponent == user and game.game_creator != user:
                 return redirect('/tictac/' + room_code)
             if game.player_count() >= 2:
-                messages.success(request, _("The room is already full or finish"))
+                messages.error(request, _("The room is already full or finish"))
                 time.sleep(2)
-                return redirect("pong:home")
+                return redirect("/tictac")
             game.game_opponent = user
             game.save()
             return redirect('/tictac/' + room_code)
-    return render(request, "front.html")
+    return render(request, "html/front.html")
 
 
 @login_required
 def play(request, room_code):
     game = get_object_or_404(TicTacToe, room_code=room_code)
 
-    return render(request, "play.html", {
+    return render(request, "html/play.html", {
         'room_code': room_code,
         'user': lambda: request.user.username if request.user.username == game.game_creator else game.game_opponent,
         'creator': game.game_creator,
@@ -69,7 +65,7 @@ def play(request, room_code):
 
 
 def game_history(request):
-    return render(request, "game_history.html", {
+    return render(request, "html/game_history.html", {
         'game_history': TicTacToe.objects.all(),
     })
 
