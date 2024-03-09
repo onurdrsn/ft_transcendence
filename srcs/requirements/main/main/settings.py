@@ -16,18 +16,30 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = "django-insecure-#u+!b2hbhf$fz#1a=x-dpo!78on7r(%3x9b5y4!ri*p8vtl&v!"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = True
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-PASSWORD_RESET_TIMEOUT_DAYS = 1
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 ALLOWED_HOSTS = ["localhost", "onur.pythonanywhere.com"]
+
 AUTH_USER_MODEL = 'account.User'
+
+# CSRF_COOKIE_SECURE = True
+
+CORS_ALLOWED_ORIGINS = [
+    "https://odursun.42.fr",
+    "https://192.168.1.251",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://odursun.42.fr',
+    'https://192.168.1.251',
+]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'account.backend.CaseInsensitiveEmailBackend',
+)
 
 WSGI_APPLICATION = "main.wsgi.application"
 ASGI_APPLICATION = "main.asgi.application"
@@ -35,48 +47,47 @@ ASGI_APPLICATION = "main.asgi.application"
 USER_ONLINE_TIMEOUT = 10
 USER_LAST_SEEN_TIMEOUT = 60 * 60 * 24 * 7
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.AllowAllUsersModelBackend',
-    'account.backend.CaseInsensitiveEmailBackend',
-)
+LOGIN_URL = "account:login"
 
 # WebSocket protocol
-# CHANNEL_LAYERS = {
-#     'default': dict(
-#         BACKEND='channels_redis.core.RedisChannelLayer',
-#         CONFIG={
-#             'hosts': [('127.0.0.1', '6379')],
-#         }
-#     ),
-# }
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": env('CHANNEL_BACKEND'),
+        "CONFIG": {
+            "hosts": [(env('CHANNEL_HOST'), env('CHANNEL_PORT'))],
+        },
+    },
+}
+"""
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer'
     }
 }
-# Application definition
-
+"""
 INSTALLED_APPS = [
-    # my party
+#     my party
     'account',
     'chat',
     'friend',
     'tictac',
     'pong',
 
-    # third party
+#     third party
     'daphne',
+    'channels',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'channels',
-    'django_prometheus',
+    'whitenoise.runserver_nostatic',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
@@ -89,6 +100,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'middleware.middleware.ActiveUserMiddleware',  # local user middleware
     'middleware.middleware.LanguageMiddleware',  # local multiple language middleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # debug false
 ]
 
 ROOT_URLCONF = "main.urls"
@@ -104,6 +116,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "middleware.middleware.add_variable_to_context",
             ],
         },
     },
@@ -111,26 +124,25 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': env('POSTGRES_ENGINE'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
+    },
+}
+"""
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-"""
-DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'advenced',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',  # host -> localhost docker -> postgres
-        'PORT': '5432',
-    },
-}
-"""
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -157,20 +169,23 @@ TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
-
 USE_TZ = True
 
-BASE_URL = "http://[::]:8000"
+BASE_URL = "https://[::]:8000"
 
 DATA_UPLOAD_MEMORY_SIZE = 10485760  # 10 MB
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'media'),
+]
 
 LANGUAGE_CODE = "en"
 USE_L10N = True
@@ -191,12 +206,15 @@ LANGUAGE_COOKIE_NAME = "django_language"
 LANGUAGE_COOKIE_AGE = 31536000
 LANGUAGE_REDIRECT = True
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'media'),
-]
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#zdefault-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+PASSWORD_RESET_TIMEOUT_DAYS = 1
