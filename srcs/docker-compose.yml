@@ -11,12 +11,18 @@ services:
       - '8000:8000'
     env_file:
       - requirements/.env
-    restart: always
+    volumes:
+      - ./requirements/main:/main
+    restart: unless-stopped
     networks:
       - ft_transcendence
-    depends_on:
-      - postgres
-    command: ["bash", "start.sh", "[::]:8000"]
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -h localhost -p 5432 -q -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    command: ["bash", "/chat/start.sh"]
 
   postgres:
     image: postgres:latest
@@ -24,7 +30,7 @@ services:
     ports:
       - '5433:5432'
     volumes:
-      - db:/var/lib/postgresql/data
+      - "db:/var/lib/postgresql/data:z"
     restart: always
     networks:
       - ft_transcendence
@@ -46,6 +52,31 @@ services:
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
     ports:
       - '9100:9100'
+    networks:
+      - ft_transcendence
+
+  nginx:
+    build:
+      context: requirements/nginx
+    restart: unless-stopped
+    volumes:
+      - ./requirements/main:/main
+    networks:
+      - ft_transcendence
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    env_file:
+      - requirements/.env
+    volumes:
+      - ./.temp/redis:/data
     networks:
       - ft_transcendence
 
