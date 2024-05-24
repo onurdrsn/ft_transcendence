@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM python:3.10-alpine
+FROM --platform=$BUILDPLATFORM python:3.12-alpine
 
 WORKDIR /chat
 
@@ -8,11 +8,13 @@ ENV PIP_ROOT_USER_ACTION ignore
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
-RUN apk update && apk add bash
-RUN apk add --virtual build-deps gcc python3-dev musl-dev && \
-apk add postgresql-dev
+RUN apk add --update --no-cache --virtual build-deps gcc python3-dev musl-dev bash gcc libc-dev linux-headers postgresql-dev postgresql-client libffi-dev gettext
 
-COPY . .
+COPY main/ .
+
+COPY start.sh .
+
+COPY .env .
 
 RUN pip3 install --upgrade pip && \
-  pip3 install -r main/requirements.txt --no-cache-dir
+pip3 install -r requirements.txt --no-cache-dir
