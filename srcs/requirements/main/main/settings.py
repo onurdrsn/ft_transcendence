@@ -26,8 +26,6 @@ SECRET_KEY = "django-insecure-#u+!b2hbhf$fz#1a=x-dpo!78on7r(%3x9b5y4!ri*p8vtl&v!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 ALLOWED_HOSTS = ["onur.pythonanywhere.com"]
 
 AUTH_USER_MODEL = 'account.User'
@@ -59,6 +57,18 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels.layers.InMemoryChannelLayer'
     }
 }
+
+"""
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": env('CHANNEL_BACKEND'),
+        "CONFIG": {
+            "hosts": [(env('CHANNEL_HOST'), env('CHANNEL_PORT'))],
+        },
+    },
+}
+"""
+
 INSTALLED_APPS = [
     'account',
     'chat',
@@ -75,6 +85,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'whitenoise.runserver_nostatic',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +129,19 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': env('POSTGRES_ENGINE'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
+    },
+}
+"""
 
 AUTH_PASSWORD_VALIDATORS = [
     {
